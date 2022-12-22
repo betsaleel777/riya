@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
             <div class="d-flex align-items-center">
                 <!-- Search form -->
-                <form class="navbar-search form-inline" id="navbar-search-main">
+                {{-- <form class="navbar-search form-inline" id="navbar-search-main">
                     <div class="input-group input-group-merge search-bar">
                         <span class="input-group-text" id="topbar-addon">
                             <svg class="icon icon-xs" x-description="Heroicon name: solid/search"
@@ -17,12 +17,12 @@
                         <input type="text" class="form-control" id="topbarInputIconLeft" placeholder="Search"
                             aria-label="Search" aria-describedby="topbar-addon">
                     </div>
-                </form>
+                </form> --}}
                 <!-- / Search form -->
             </div>
             <!-- Navbar links -->
             <ul class="navbar-nav align-items-center">
-                <li class="nav-item dropdown">
+                {{-- <li class="nav-item dropdown">
                     <a class="nav-link text-dark notification-bell unread dropdown-toggle"
                         data-unread-notifications="true" href="#" role="button" data-bs-toggle="dropdown"
                         data-bs-display="static" aria-expanded="false">
@@ -159,10 +159,10 @@
                             </a>
                         </div>
                     </div>
-                </li>
+                </li> --}}
                 <li class="nav-item dropdown ms-lg-3">
-                    <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         <div class="media d-flex align-items-center">
                             <img class="avatar rounded-circle" alt="Image placeholder"
                                 src="{{ asset('theme/assets/img/team/profile-picture-3.jpg') }}">

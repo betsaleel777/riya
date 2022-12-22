@@ -7,7 +7,7 @@
     <main class="content">
         @include('layouts.partials.header')
         @yield('content')
-        @include('layouts.partials.footer')
+        {{-- @include('layouts.partials.footer') --}}
     </main>
     @include('layouts.partials.scripts')
 </body>

@@ -27,15 +27,16 @@
    <!-- Vanilla JS Datepicker -->
    <script src="{{ asset('theme/vendor/vanillajs-datepicker/dist/js/datepicker.min.js') }}"></script>
 
-   <!-- Notyf -->
-   <script src="{{ asset('theme/vendor/notyf/notyf.min.js') }}"></script>
-
    <!-- Simplebar -->
    <script src="{{ asset('theme/vendor/simplebar/dist/simplebar.min.js') }}"></script>
 
    <!-- Github buttons -->
    <script async defer src="https://buttons.github.io/buttons.js"></script>
-   <script src="{{ asset('theme/assets/js/volt.js') }}"></script>
+
+   @include('layouts.partials.flash')
 
    <!-- Volt JS -->
+   <script src="{{ asset('theme/assets/js/volt.js') }}"></script>
+
+
    @yield('scripts')

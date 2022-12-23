@@ -28758,3 +28758,10 @@ article .h1, article .h2, article .h3, article .h4, article .h5, article .h6 {
     z-index: 9999;
 }
 /*# sourceMappingURL=volt.css.map */
+.notyf__toast {
+  max-width: 50em !important;
+}
+.notyf__ripple {
+    height: 60em;
+    width: 60em;
+  }

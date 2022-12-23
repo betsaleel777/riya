@@ -51,6 +51,8 @@
 
     <!-- Volt CSS -->
     <link type="text/css" href="{{ asset('theme/css/volt.css') }}" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/73e860d3cb.js" crossorigin="anonymous"></script>
     @yield('links')
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->

@@ -22,7 +22,18 @@
                 <h1 class="h4">Types de Terrains</h1>
             </div>
             <div>
-                <a href="" class="btn btn-primary d-inline-flex align-items-center">
+                @if ($searching)
+                    <a href="{{ route('terrain.type.index') }}" class="btn btn-primary d-inline-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="feather feather-arrow-left">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        retour
+                    </a>
+                @endif
+                <a href="{{ route('terrain.type.trashed') }}" class="btn btn-primary d-inline-flex align-items-center">
                     <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"></path>
@@ -46,24 +57,40 @@
     </div>
     <div class="card border-0 shadow mb-4">
         <div class="card-body">
+            <div class="mb-3 w-25">
+                <form action="{{ route('terrain.type.search') }}" method="POST">
+                    @csrf
+                    <div class="input-group">
+                        <button type="submit" class="input-group-text" id="basic-addon1">
+                            <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        <input type="text" class="form-control" placeholder="Search" name="search" aria-label="Search">
+                    </div>
+                </form>
+            </div>
             <div class="table-responsive">
                 <table class="table table-centered table-nowrap mb-0 rounded">
                     <thead class="thead-light">
                         <tr>
                             <th class="border-0 rounded-start">#</th>
-                            <th class="border-0">Nom</th>
-                            <th class="border-0">Crée le</th>
-                            <th class="border-0">Options</th>
+                            <th class="border-0 w-50">Nom</th>
+                            <th class="border-0 w-50">Crée le</th>
+                            <th class="border-0 w-10">Options</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
-                            $lignes = 0;
+                            $lignes = 1;
                         @endphp
                         @forelse ($types as $type)
                             <tr>
                                 <td>
-                                    {{ $ligne++ }}
+                                    {{ $lignes++ }}
                                 </td>
                                 <td>
                                     {{ $type->nom }}
@@ -74,48 +101,12 @@
                                 <td>
                                     <div class="row d-flex align-items-center">
                                         <div class="col-4">
-                                            <a href=""
-                                                class="btn btn-outline-gray-600 d-inline-flex align-items-center">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="feather feather-edit">
-                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7">
-                                                    </path>
-                                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z">
-                                                    </path>
-                                                </svg>
-                                            </a>
+                                            <a href="{{ route('terrain.type.edit', [$type]) }}"
+                                                class="fa-solid fa-lg fa-edit"></a>
                                         </div>
                                         <div class="col-4">
-                                            <a href=""
-                                                class="btn btn-outline-gray-600 d-inline-flex align-items-center">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="feather feather-eye">
-                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                    <circle cx="12" cy="12" r="3"></circle>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                        <div class="col-4">
-                                            <a href=""
-                                                class="btn btn-outline-gray-600 d-inline-flex align-items-center">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="feather feather-trash-2">
-                                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                                    <path
-                                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                                    </path>
-                                                    <line x1="10" y1="11" x2="10" y2="17">
-                                                    </line>
-                                                    <line x1="14" y1="11" x2="14" y2="17">
-                                                    </line>
-                                                </svg>
-                                            </a>
+                                            <a href="{{ route('terrain.type.trash', [$type]) }}"
+                                                class="fa-solid fa-lg fa-trash-can"></a>
                                         </div>
                                     </div>
                                 </td>
@@ -131,7 +122,7 @@
                         @endforelse
                     </tbody>
                 </table>
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center mt-3">
                     {!! $types->links() !!}
                 </div>
             </div>

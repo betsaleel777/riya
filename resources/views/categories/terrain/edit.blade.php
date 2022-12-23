@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Création de type de terrains')
+@section('title', 'modifier terrain' . $type->nom)
 @section('content')
     <div class="py-4">
         <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -15,7 +15,7 @@
                     </a>
                 </li>
                 <li class="breadcrumb-item"><a href="{{ route('terrain.type.index') }}">Types de Terrains</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Nouveau type</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $type->nom }}</li>
             </ol>
         </nav>
     </div>
@@ -23,11 +23,12 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-6">
-                    <form action="{{ route('terrain.type.store') }}" method="post">
+                    <form action="{{ route('terrain.type.update') }}" method="post">
                         @csrf
+                        <input hidden type="text" name="type" value="{{ $type->id }}">
                         <div class="mb-4">
                             <label for="nom">Nom</label>
-                            <input value="{{ old('nom') }}" type="text"
+                            <input value="{{ $type->nom }}" type="text"
                                 class="form-control @error('nom') is-invalid @enderror" id="nom" name="nom">
                             @error('nom')
                                 <div class="invalid-feedback">
@@ -36,7 +37,7 @@
                             @enderror
                         </div>
                         <div class="align-right">
-                            <button class="btn btn-primary" type="submit">créer</button>
+                            <button class="btn btn-primary" type="submit">modifier</button>
                         </div>
                     </form>
                 </div>

@@ -24,8 +24,8 @@
             <div>
                 @if ($searching)
                     <a href="{{ route('terrain.type.index') }}" class="btn btn-primary d-inline-flex align-items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        <svg class="icon icon-xs me-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="feather feather-arrow-left">
                             <line x1="19" y1="12" x2="5" y2="12"></line>
                             <polyline points="12 19 5 12 12 5"></polyline>
@@ -42,6 +42,15 @@
                             clip-rule="evenodd"></path>
                     </svg>
                     Archives
+                </a>
+                <a href="{{ route('terrain.type.export') }}" class="btn btn-primary d-inline-flex align-items-center">
+                    <svg class="icon icon-xs me-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="feather feather-file">
+                        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                        <polyline points="13 2 13 9 20 9"></polyline>
+                    </svg>
+                    Excel
                 </a>
                 <a href="{{ route('terrain.type.create') }}" class="btn btn-primary d-inline-flex align-items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -69,7 +78,8 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                        <input type="text" class="form-control" placeholder="Search" name="search" aria-label="Search">
+                        <input type="text" class="form-control" placeholder="Search" name="search"
+                            aria-label="Search">
                     </div>
                 </form>
             </div>

@@ -25,6 +25,7 @@ Route::prefix('terrains')->name('terrain.')->group(function () {
         Route::get('restore/{id}', [CategorieTerrainController::class, 'restore'])->name('restore');
         Route::get('trash/{id}', [CategorieTerrainController::class, 'trash'])->name('trash');
         Route::get('delete/{id}', [CategorieTerrainController::class, 'delete'])->name('delete');
+        Route::get('export', [CategorieTerrainController::class, 'export'])->name('export');
         Route::post('search', [CategorieTerrainController::class, 'search'])->name('search');
         Route::post('search-trashed', [CategorieTerrainController::class, 'searchTrashed'])->name('searchTrashed');
         Route::post('store', [CategorieTerrainController::class, 'store'])->name('store');

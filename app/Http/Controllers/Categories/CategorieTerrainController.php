@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Categories;
 
+use App\Exports\TypeTerrainExport;
 use App\Http\Controllers\Controller;
 use App\Models\TypeTerrain;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CategorieTerrainController extends Controller
 {
@@ -15,7 +16,7 @@ class CategorieTerrainController extends Controller
 
     public function index(): View
     {
-        $types = TypeTerrain::paginate(8);
+        $types = TypeTerrain::paginate(DEFAULT_PAGINATION_NUMBER);
         $searching = false;
         return view('categories.terrain.index', compact('types', 'searching'));
     }
@@ -59,7 +60,7 @@ class CategorieTerrainController extends Controller
 
     public function trashed(): View
     {
-        $types = TypeTerrain::onlyTrashed()->orderBy('id', 'DESC')->paginate(8);
+        $types = TypeTerrain::onlyTrashed()->orderBy('id', 'DESC')->paginate(DEFAULT_PAGINATION_NUMBER);
         $searching = false;
         return view('categories.terrain.archive', compact('types', 'searching'));
     }
@@ -85,11 +86,11 @@ class CategorieTerrainController extends Controller
         $searching = false;
         if ($request->filled('search') and $request->has('archive')) {
             $found = TypeTerrain::where('nom', 'LIKE', "%$request->search%")->onlyTrashed();
-            $types = $found->paginate(8);
+            $types = $found->paginate(DEFAULT_PAGINATION_NUMBER);
             $searching = true;
             session()->flash('info', count($found->get()) . " type(s) de terrain(s) archivé(s) trouvé(s)");
         } else {
-            $types = TypeTerrain::onlyTrashed()->paginate(8);
+            $types = TypeTerrain::onlyTrashed()->paginate(DEFAULT_PAGINATION_NUMBER);
         }
         return view('categories.terrain.archive', compact('types', 'searching'));
     }
@@ -99,12 +100,17 @@ class CategorieTerrainController extends Controller
         $searching = false;
         if ($request->filled('search')) {
             $found = TypeTerrain::where('nom', 'LIKE', "%$request->search%");
-            $types = $found->paginate(8);
+            $types = $found->paginate(DEFAULT_PAGINATION_NUMBER);
             $searching = true;
             session()->flash('info', count($found->get()) . " type(s) de terrain(s) trouvé(s)");
         } else {
-            $types = TypeTerrain::paginate(8);
+            $types = TypeTerrain::paginate(DEFAULT_PAGINATION_NUMBER);
         }
         return view('categories.terrain.index', compact('types', 'searching'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new TypeTerrainExport, 'typeTerrain.xlsx');
     }
 }

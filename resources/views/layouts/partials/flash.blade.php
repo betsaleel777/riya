@@ -3,7 +3,7 @@
     <script src="{{ asset('theme/vendor/notyf/notyf.min.js') }}"></script>
     <script src="{{ asset('theme/assets/js/notification.js') }}"></script>
     <script>
-        notifier('success', "{{ $message }}")
+        notifier('success', "{!! $message !!}")
     </script>
 @endif
 
@@ -12,7 +12,7 @@
     <script src="{{ asset('theme/vendor/notyf/notyf.min.js') }}"></script>
     <script src="{{ asset('theme/assets/js/notification.js') }}"></script>
     <script>
-        notifier('error', "{{ $message }}")
+        notifier('error', "{!! $message !!}")
     </script>
 @endif
 
@@ -21,7 +21,7 @@
     <script src="{{ asset('theme/vendor/notyf/notyf.min.js') }}"></script>
     <script src="{{ asset('theme/assets/js/notification.js') }}"></script>
     <script>
-        notifier('info', "{{ $message }}")
+        notifier('info', "{!! $message !!}")
     </script>
 @endif
 
@@ -30,6 +30,6 @@
     <script src="{{ asset('theme/vendor/notyf/notyf.min.js') }}"></script>
     <script src="{{ asset('theme/assets/js/notification.js') }}"></script>
     <script>
-        notifier('warning', "{{ $message }}")
+        notifier('warning', "{!! $message !!}")
     </script>
 @endif

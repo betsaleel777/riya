@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'modifier type' . $type->nom)
+@section('title', 'Création de type d\'appartement')
 @section('content')
     <div class="py-4">
         <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -14,8 +14,8 @@
                         </svg>
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="{{ route('terrain.type.index') }}">Types de Terrains</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $type->nom }}</li>
+                <li class="breadcrumb-item"><a href="{{ route('appartement.type.index') }}">Types d'Appartement</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Nouveau type</li>
             </ol>
         </nav>
     </div>
@@ -23,12 +23,11 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-6">
-                    <form action="{{ route('terrain.type.update') }}" method="post">
+                    <form action="{{ route('appartement.type.store') }}" method="post">
                         @csrf
-                        <input hidden type="text" name="type" value="{{ $type->id }}">
                         <div class="mb-4">
                             <label for="nom">Nom</label>
-                            <input value="{{ $type->nom }}" type="text"
+                            <input value="{{ old('nom') }}" type="text"
                                 class="form-control @error('nom') is-invalid @enderror" id="nom" name="nom">
                             @error('nom')
                                 <div class="invalid-feedback">
@@ -37,7 +36,7 @@
                             @enderror
                         </div>
                         <div class="align-right">
-                            <button class="btn btn-primary" type="submit">modifier</button>
+                            <button class="btn btn-primary" type="submit">créer</button>
                         </div>
                     </form>
                 </div>

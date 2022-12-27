@@ -52,7 +52,6 @@ const notifier = (type, message) => {
             },
         ],
     });
-    console.log(type, message);
     notyf.open({
         type: `${type}`,
         message: `${message}`,

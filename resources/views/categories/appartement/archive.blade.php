@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Archives Types de Terrains')
+@section('title', 'Archives Types d\'appartement')
 @section('content')
     <div class="py-4">
         <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -14,7 +14,7 @@
                         </svg>
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="{{ route('terrain.type.index') }}">Types de Terrains</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('appartement.type.index') }}">Types d'Appartement</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Types Archivés</li>
             </ol>
         </nav>
@@ -24,7 +24,8 @@
             </div>
             <div>
                 @if ($searching)
-                    <a href="{{ route('terrain.type.trashed') }}" class="btn btn-primary d-inline-flex align-items-center">
+                    <a href="{{ route('appartement.type.trashed') }}"
+                        class="btn btn-primary d-inline-flex align-items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="feather feather-arrow-left">
@@ -40,7 +41,7 @@
     <div class="card border-0 shadow mb-4">
         <div class="card-body">
             <div class="mb-3 w-25">
-                <form action="{{ route('terrain.type.searchTrashed') }}" method="POST">
+                <form action="{{ route('appartement.type.searchTrashed') }}" method="POST">
                     @csrf
                     <input type="text" hidden name="archive" value="1">
                     <div class="input-group">
@@ -84,19 +85,17 @@
                                 <td>
                                     <div class="row d-flex align-items-center">
                                         <div class="col-4">
-                                            <a href="{{ route('terrain.type.restore', [$type]) }}"
+                                            <a href="{{ route('appartement.type.restore', [$type]) }}"
                                                 class="fa-solid fa-lg fa-trash-can-arrow-up"></a>
                                         </div>
                                         <div class="col-4">
-                                            <div class="col-4">
-                                                <button
-                                                    onclick="question({{ json_encode(['name' => $type->nom, 'link' => 'delete/' . $type->id]) }})"
-                                                    class="btn btn-link btn-sm">
-                                                    <i class="fa-solid fa-lg fa-trash"></i>
-                                                </button>
-                                                {{-- <a href="{{ route('terrain.type.delete', [$type]) }}"
-                                                    class="fa-solid fa-lg fa-trash"></a> --}}
-                                            </div>
+                                            <button
+                                                onclick="question({{ json_encode(['name' => $type->nom, 'link' => 'delete/' . $type->id]) }})"
+                                                class="btn btn-link btn-sm">
+                                                <i class="fa-solid fa-lg fa-trash"></i>
+                                            </button>
+                                            {{-- <a href="{{ route('appartement.type.delete', [$type]) }}"
+                                                ></a> --}}
                                         </div>
                                     </div>
                                 </td>
@@ -105,7 +104,7 @@
                             <tr>
                                 <td colspan="4">
                                     <div class="alert alert-light text-center" role="alert">
-                                        <h6>Types de terrains archivés vide</h6>
+                                        <h6>Types de appartements archivés vide</h6>
                                     </div>
                                 </td>
                             </tr>

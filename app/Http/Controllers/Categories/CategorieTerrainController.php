@@ -6,6 +6,7 @@ use App\Exports\TypeTerrainExport;
 use App\Http\Controllers\Controller;
 use App\Models\TypeTerrain;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -31,7 +32,7 @@ class CategorieTerrainController extends Controller
         $request->validate(TypeTerrain::RULES, TypeTerrain::MESSAGES);
         $type = new TypeTerrain($request->all());
         $type->save();
-        session()->flash('success', "Type de terrain: $type->nom a été crée avec succès.");
+        session()->flash('success', "Type de terrain: <b>$type->nom</b> a été crée avec succès.");
         return redirect()->route(self::INDEX);
     }
 
@@ -46,7 +47,7 @@ class CategorieTerrainController extends Controller
         $request->validate(TypeTerrain::editRules($request->type), TypeTerrain::MESSAGES);
         $type = TypeTerrain::findOrFail($request->type);
         $type->update($request->all());
-        session()->flash('success', "Le type a été modifié avec succès. ");
+        session()->flash('success', "Le type a été modifié avec succès.");
         return redirect()->route(self::INDEX);
     }
 
@@ -54,7 +55,7 @@ class CategorieTerrainController extends Controller
     {
         $type = TypeTerrain::findOrFail($id);
         $type->delete();
-        session()->flash('success', "Le type: '$type->nom' a été supprimé avec succès.");
+        session()->flash('success', "Le type: <b>$type->nom</b> a été supprimé avec succès.");
         return redirect()->route(self::INDEX);
     }
 
@@ -69,16 +70,15 @@ class CategorieTerrainController extends Controller
     {
         $type = TypeTerrain::withTrashed()->findOrFail($id);
         $type->restore();
-        session()->flash('success', "Le type: '$type->nom' a été restauré avec succès.");
+        session()->flash('success', "Le type: <b>$type->nom</b> a été restauré avec succès.");
         return redirect()->back();
     }
 
-    public function delete(int $id)
+    public function delete(int $id): JsonResponse
     {
         $type = TypeTerrain::withTrashed()->findOrFail($id);
         $type->forceDelete();
-        session()->flash('success', "Le type: '$type->nom' a été définitivement supprimé avec succès.");
-        return redirect()->back();
+        return response()->json(['message' => "Le type: <b>$type->nom</b> a été définitivement supprimé avec succès."]);
     }
 
     public function searchTrashed(Request $request): View

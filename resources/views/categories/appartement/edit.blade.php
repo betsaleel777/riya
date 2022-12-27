@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'modifier type' . $type->nom)
+@section('title', 'modifier type:' . $type->nom)
 @section('content')
     <div class="py-4">
         <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -14,7 +14,7 @@
                         </svg>
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="{{ route('terrain.type.index') }}">Types de Terrains</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('appartement.type.index') }}">Types de appartements</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $type->nom }}</li>
             </ol>
         </nav>
@@ -23,7 +23,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-6">
-                    <form action="{{ route('terrain.type.update') }}" method="post">
+                    <form action="{{ route('appartement.type.update') }}" method="post">
                         @csrf
                         <input hidden type="text" name="type" value="{{ $type->id }}">
                         <div class="mb-4">

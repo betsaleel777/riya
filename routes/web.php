@@ -3,6 +3,7 @@
 use App\Http\Controllers\Categories\CategorieAppartementController;
 use App\Http\Controllers\Categories\CategorieTerrainController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,11 +42,20 @@ Route::prefix('appartements')->name('appartement.')->group(function () {
         Route::get('edit/{id}', [CategorieAppartementController::class, 'edit'])->name('edit');
         Route::get('restore/{id}', [CategorieAppartementController::class, 'restore'])->name('restore');
         Route::get('trash/{id}', [CategorieAppartementController::class, 'trash'])->name('trash');
-        Route::get('delete/{id}', [CategorieAppartementController::class, 'delete'])->name('delete');
         Route::get('export', [CategorieAppartementController::class, 'export'])->name('export');
         Route::post('search', [CategorieAppartementController::class, 'search'])->name('search');
         Route::post('search-trashed', [CategorieAppartementController::class, 'searchTrashed'])->name('searchTrashed');
+        Route::get('delete/{id}', [CategorieAppartementController::class, 'delete'])->name('delete');
         Route::post('store', [CategorieAppartementController::class, 'store'])->name('store');
         Route::post('update', [CategorieAppartementController::class, 'update'])->name('update');
     });
+});
+Route::prefix('utilisateurs')->name('user.')->group(function () {
+    Route::resource('users', UserController::class);
+    Route::get('trashed', [UserController::class, 'trashed'])->name('trashed');
+    Route::get('restore/{id}', [UserController::class, 'restore'])->name('restore');
+    Route::get('trash/{id}', [UserController::class, 'trash'])->name('trash');
+    Route::get('export', [UserController::class, 'export'])->name('export');
+    Route::post('search', [UserController::class, 'search'])->name('search');
+    Route::post('search-trashed', [UserController::class, 'searchTrashed'])->name('searchTrashed');
 });

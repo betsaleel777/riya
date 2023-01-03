@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Categories\CategorieAppartementController;
 use App\Http\Controllers\Categories\CategorieTerrainController;
+use App\Http\Controllers\Categories\TypeClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -50,6 +51,22 @@ Route::middleware('auth')->group(function () {
             Route::delete('destroy/{id}', [CategorieAppartementController::class, 'destroy'])->name('destroy');
             Route::post('store', [CategorieAppartementController::class, 'store'])->name('store');
             Route::post('update', [CategorieAppartementController::class, 'update'])->name('update');
+        });
+    });
+    Route::prefix('clients')->name('client.')->group(function () {
+        Route::prefix('types')->name('type.')->group(function () {
+            Route::get('/', [TypeClientController::class, 'index'])->name('index');
+            Route::get('trashed', [TypeClientController::class, 'trashed'])->name('trashed');
+            Route::get('create', [TypeClientController::class, 'create'])->name('create');
+            Route::get('edit/{id}', [TypeClientController::class, 'edit'])->name('edit');
+            Route::get('restore/{id}', [TypeClientController::class, 'restore'])->name('restore');
+            Route::get('trash/{id}', [TypeClientController::class, 'trash'])->name('trash');
+            Route::get('export', [TypeClientController::class, 'export'])->name('export');
+            Route::post('search', [TypeClientController::class, 'search'])->name('search');
+            Route::post('search-trashed', [TypeClientController::class, 'searchTrashed'])->name('searchTrashed');
+            Route::delete('destroy/{id}', [TypeClientController::class, 'destroy'])->name('destroy');
+            Route::post('store', [TypeClientController::class, 'store'])->name('store');
+            Route::post('update', [TypeClientController::class, 'update'])->name('update');
         });
     });
     Route::prefix('utilisateurs')->group(function () {

@@ -142,6 +142,11 @@
                                     <span class="sidebar-text">Type de terrains</span>
                                 </a>
                             </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{{ route('client.type.index') }}">
+                                    <span class="sidebar-text">Type de clients</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

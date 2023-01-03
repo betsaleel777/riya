@@ -6,6 +6,7 @@ use App\Exports\TypeAppartementExport;
 use App\Http\Controllers\Controller;
 use App\Models\TypeAppartement;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -73,12 +74,12 @@ class CategorieAppartementController extends Controller
         return redirect()->back();
     }
 
-    public function delete(int $id)
+    public function destroy(int $id): JsonResponse
     {
         $type = TypeAppartement::withTrashed()->findOrFail($id);
         $type->forceDelete();
         session()->flash('success', "Le type d'appartement: '$type->nom' a été définitivement supprimé avec succès.");
-        return redirect()->back();
+        return response()->json(['message' => "Le type d'appartement: <b>$type->nom</b> a été définitivement supprimé avec succès."]);
     }
 
     public function searchTrashed(Request $request): View

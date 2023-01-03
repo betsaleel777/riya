@@ -90,7 +90,7 @@
                                         </div>
                                         <div class="col-4">
                                             <button
-                                                onclick="question({{ json_encode(['name' => $type->nom, 'link' => 'delete/' . $type->id]) }})"
+                                                onclick="question({{ json_encode(['name' => $type->nom, 'link' => 'destroy/' . $type->id]) }})"
                                                 class="btn btn-link btn-sm">
                                                 <i class="fa-solid fa-lg fa-trash"></i>
                                             </button>
@@ -139,15 +139,20 @@
                 `Voulez-vous réelement supprimer le type: <b>${payload.name}</b> ?`,
                 'question'
             ).then((result) => {
-                fetch(payload.link, {
-                    method: 'GET'
-                }).then(() => {
-                    notifier('success', `<b>${payload.name}</b> a été définitivement supprimé.`)
-                    setTimeout(() => {
-                        location.reload();
-                    }, "5000")
+                if (result.isConfirmed) {
+                    fetch(payload.link, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        }
+                    }).then(() => {
+                        notifier('success', `<b>${payload.name}</b> a été définitivement supprimé.`)
+                        setTimeout(() => {
+                            location.reload();
+                        }, "2500")
 
-                })
+                    })
+                }
             })
         }
     </script>

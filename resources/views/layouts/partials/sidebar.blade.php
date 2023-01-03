@@ -128,7 +128,7 @@
                     <div class="multi-level collapse " role="list" id="submenu-app" aria-expanded="false">
                         <ul class="flex-column nav">
                             <li class="nav-item ">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{{ route('user.index') }}">
                                     <span class="sidebar-text">Utilisateurs</span>
                                 </a>
                             </li>

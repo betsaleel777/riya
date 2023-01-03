@@ -74,11 +74,11 @@ class CategorieTerrainController extends Controller
         return redirect()->back();
     }
 
-    public function delete(int $id): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
         $type = TypeTerrain::withTrashed()->findOrFail($id);
         $type->forceDelete();
-        return response()->json(['message' => "Le type: <b>$type->nom</b> a été définitivement supprimé avec succès."]);
+        return response()->json(['message' => "Le type de terrain: <b>$type->nom</b> a été définitivement supprimé avec succès."]);
     }
 
     public function searchTrashed(Request $request): View

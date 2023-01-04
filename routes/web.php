@@ -4,6 +4,7 @@ use App\Http\Controllers\Categories\CategorieAppartementController;
 use App\Http\Controllers\Categories\CategorieTerrainController;
 use App\Http\Controllers\Categories\TypeClientController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TerrainController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,18 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::prefix('terrains')->name('terrain.')->group(function () {
+        Route::get('/', [TerrainController::class, 'index'])->name('index');
+        Route::get('trashed', [TerrainController::class, 'trashed'])->name('trashed');
+        Route::get('create', [TerrainController::class, 'create'])->name('create');
+        Route::get('edit/{id}', [TerrainController::class, 'edit'])->name('edit');
+        Route::get('restore/{id}', [TerrainController::class, 'restore'])->name('restore');
+        Route::get('trash/{id}', [TerrainController::class, 'trash'])->name('trash');
+        Route::delete('destroy/{id}', [TerrainController::class, 'destroy'])->name('destroy');
+        Route::get('export', [TerrainController::class, 'export'])->name('export');
+        Route::post('search', [TerrainController::class, 'search'])->name('search');
+        Route::post('search-trashed', [TerrainController::class, 'searchTrashed'])->name('searchTrashed');
+        Route::post('store', [TerrainController::class, 'store'])->name('store');
+        Route::post('update', [TerrainController::class, 'update'])->name('update');
         Route::prefix('types')->name('type.')->group(function () {
             Route::get('/', [CategorieTerrainController::class, 'index'])->name('index');
             Route::get('trashed', [CategorieTerrainController::class, 'trashed'])->name('trashed');

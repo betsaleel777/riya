@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\TerrainExport;
 use App\Models\Terrain;
+use App\Models\TypeTerrain;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -23,13 +24,19 @@ class TerrainController extends Controller
 
     public function create(): View
     {
-        return view('terrain.create');
+        $types = TypeTerrain::get();
+        return view('terrain.create', compact('types'));
     }
 
     public function store(Request $request): RedirectResponse
     {
         $request->validate(Terrain::RULES, Terrain::MESSAGES);
         $terrain = new Terrain($request->all());
+        $terrain->codeGenerate();
+        $terrain->attestation_villageoise = $request->has('attestation_villageoise');
+        $terrain->titre_foncier = $request->has('titre_foncier');
+        $terrain->document_cession = $request->has('document_cession');
+        $terrain->arreter_approbation = $request->has('arreter_approbation');
         $terrain->save();
         session()->flash('success', "Le terrain: <b>$terrain->nom</b> a été crée avec succès.");
         return redirect()->route(self::INDEX);
@@ -38,14 +45,28 @@ class TerrainController extends Controller
     public function edit(int $id): View
     {
         $terrain = Terrain::findOrFail($id);
-        return view('terrain.edit', compact('terrain'));
+        $types = TypeTerrain::get();
+        return view('terrain.edit', compact('terrain', 'types'));
     }
 
     public function update(Request $request): RedirectResponse
     {
-        $request->validate(Terrain::editRules($request->type), Terrain::MESSAGES);
-        $terrain = Terrain::findOrFail($request->type);
-        $terrain->update($request->all());
+        $request->validate(Terrain::RULES, Terrain::MESSAGES);
+        $terrain = Terrain::findOrFail($request->terrain);
+        $terrain->nom = $request->nom;
+        $terrain->superficie = $request->superficie;
+        $terrain->montant_location = $request->montant_location;
+        $terrain->montant_investit = $request->montant_investit;
+        $terrain->pays = $request->pays;
+        $terrain->ville = $request->ville;
+        $terrain->quartier = $request->quartier;
+        $terrain->proprietaire = $request->proprietaire;
+        $terrain->type_terrain_id = $request->type_terrain_id;
+        $terrain->titre_foncier = $request->has('titre_foncier');
+        $terrain->attestation_villageoise = $request->has('attestation_villageoise');
+        $terrain->document_cession = $request->has('document_cession');
+        $terrain->arreter_approbation = $request->has('arreter_approbation');
+        $terrain->save();
         session()->flash('success', "Le terrain a été modifié avec succès.");
         return redirect()->route(self::INDEX);
     }

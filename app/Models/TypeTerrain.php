@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TypeTerrain extends Model
@@ -22,5 +23,10 @@ class TypeTerrain extends Model
     public static function editRules(int $id)
     {
         return ['nom' => 'required|max:190|unique:type_terrains,nom,' . $id];
+    }
+
+    public function terrains(): HasMany
+    {
+        return $this->hasMany(Terrain::class);
     }
 }

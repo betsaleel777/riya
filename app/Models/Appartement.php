@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Terrain extends Model
+class Appartement extends Model
 {
     use SoftDeletes;
 
@@ -14,7 +14,8 @@ class Terrain extends Model
         'reference', 'nom', 'superficie', 'montant_location',
         'montant_investit', 'pays', 'ville', 'quartier',
         'proprietaire', 'attestation_villageoise', 'titre_foncier',
-        'document_cession', 'arreter_approbation', 'type_terrain_id',
+        'document_cession', 'arreter_approbation', 'cour_commune', 'type_appartement_id',
+        'placard', 'etage', 'cuisine', 'garage', 'parking',
     ];
 
     protected $with = ['type'];
@@ -28,7 +29,14 @@ class Terrain extends Model
         'titre_foncier' => 'boolean',
         'document_cession' => 'boolean',
         'arreter_approbation' => 'boolean',
-        'superficie' => 'integer',
+        'cour_commune' => 'boolean',
+        'placard' => 'boolean',
+        'etage' => 'boolean',
+        'cuisine' => 'boolean',
+        'garage' => 'boolean',
+        'parking' => 'boolean',
+        'cloture' => 'boolean',
+        'superficie' => 'boolean',
         'montant_location' => 'integer',
         'montant_investit' => 'integer',
     ];
@@ -42,7 +50,7 @@ class Terrain extends Model
         'ville' => 'required|max:50',
         'quartier' => 'required|max:70',
         'proprietaire' => 'required|max:190',
-        'type_terrain_id' => 'required',
+        'type_appartement_id' => 'required',
     ];
 
     const MESSAGES = [
@@ -61,7 +69,7 @@ class Terrain extends Model
         'quartier.required' => 'Le quartier est requis.',
         'quartier.max' => 'Limite de caractère dépassée (70).',
         'proprietaire.required' => 'Le nom du propriétaire est requis.',
-        'type_terrain_id.required' => 'Le type de terrain est requis.',
+        'type_appartement_id.required' => 'Le type de terrain est requis.',
     ];
 
     public function codeGenerate(): void
@@ -72,6 +80,6 @@ class Terrain extends Model
 
     public function type(): BelongsTo
     {
-        return $this->belongsTo(TypeTerrain::class, 'type_terrain_id');
+        return $this->belongsTo(TypeAppartement::class, 'type_appartement_id');
     }
 }

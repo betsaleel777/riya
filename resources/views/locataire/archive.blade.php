@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Terrains Archivés')
+@section('title', 'Clients Archivés')
 @section('content')
     <div class="py-4">
         <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -14,17 +14,17 @@
                         </svg>
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="{{ route('terrain.index') }}">Liste des Terrains</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Terrains Archivés</li>
+                <li class="breadcrumb-item"><a href="{{ route('client.index') }}">Liste des Clients</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Clients Archivés</li>
             </ol>
         </nav>
         <div class="d-flex justify-content-between w-100 flex-wrap">
             <div class="mb-3 mb-lg-0">
-                <h1 class="h4">Terrains</h1>
+                <h1 class="h4">Clients</h1>
             </div>
             <div>
                 @if ($searching)
-                    <a href="{{ route('terrain.trashed') }}" class="btn btn-primary d-inline-flex align-items-center">
+                    <a href="{{ route('client.trashed') }}" class="btn btn-primary d-inline-flex align-items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="feather feather-arrow-left">
@@ -40,7 +40,7 @@
     <div class="card border-0 shadow mb-4">
         <div class="card-body">
             <div class="mb-3 w-25">
-                <form action="{{ route('terrain.searchTrashed') }}" method="POST">
+                <form action="{{ route('client.searchTrashed') }}" method="POST">
                     @csrf
                     <input type="text" hidden name="archive" value="1">
                     <div class="input-group">
@@ -61,12 +61,11 @@
                     <thead class="thead-light">
                         <tr>
                             <th class="border-0 rounded-start">#</th>
-                            <th class="border-0">Nom</th>
+                            <th class="border-0">Nom complet</th>
                             <th class="border-0">Type</th>
-                            <th class="border-0">Superficie(m²)</th>
-                            <th class="border-0">Quartier</th>
-                            <th class="border-0">Propriétaire</th>
-                            <th class="border-0">Montant location</th>
+                            <th class="border-0">Email</th>
+                            <th class="border-0">Téléphone</th>
+                            <th class="border-0">Etat</th>
                             <th class="border-0 w-10">Crée le</th>
                             <th class="border-0 w-10">Options</th>
                         </tr>
@@ -75,47 +74,47 @@
                         @php
                             $lignes = 1;
                         @endphp
-                        @forelse ($terrains as $terrain)
+                        @forelse ($clients as $client)
                             <tr>
                                 <td>
                                     {{ $lignes++ }}
                                 </td>
                                 <td>
-                                    {{ $terrain->nom }}
+                                    {{ $client->nom_complet }}
                                 </td>
                                 <td>
-                                    {{ $terrain->type->nom }}
+                                    {{ $client->type?->nom ?: 'Aucun type' }}
                                 </td>
                                 <td>
-                                    {{ $terrain->superficie }}
+                                    {{ $client->email }}
                                 </td>
                                 <td>
-                                    {{ $terrain->quartier }}
+                                    {{ $client->telephone }}
                                 </td>
                                 <td>
-                                    {{ $terrain->proprietaire }}
+                                    {{ $client->etat }}
                                 </td>
                                 <td>
-                                    {{ $terrain->montant_location }}
+                                    {{ $client->created_at }}
                                 </td>
                                 <td>
-                                    {{ $terrain->created_at }}
-                                </td>
-                                <td>
-                                    <a href="{{ route('terrain.restore', [$terrain]) }}"
-                                        class="fa-solid fa-lg fa-trash-can-arrow-up btn btn-sm"></a>
-                                    <button
-                                        onclick="question({{ json_encode(['name' => $terrain->nom, 'link' => 'destroy/' . $terrain->id]) }})"
-                                        class="btn btn-link btn-sm">
-                                        <i class="fa-solid fa-lg fa-trash"></i>
-                                    </button>
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-4">
+                                            <a href="{{ route('client.edit', [$client]) }}"
+                                                class="fa-solid fa-lg fa-edit"></a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="{{ route('client.trash', [$client]) }}"
+                                                class="fa-solid fa-lg fa-trash-can"></a>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9">
+                                <td colspan="8">
                                     <div class="alert alert-light text-center" role="alert">
-                                        <h6>Liste des Terrains Archivés vides</h6>
+                                        <h6>Liste des clients vide</h6>
                                     </div>
                                 </td>
                             </tr>
@@ -123,7 +122,7 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center mt-3">
-                    {!! $terrains->links() !!}
+                    {!! $clients->links() !!}
                 </div>
             </div>
         </div>

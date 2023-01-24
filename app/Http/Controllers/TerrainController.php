@@ -19,7 +19,7 @@ class TerrainController extends Controller
     {
         $terrains = Terrain::paginate(DEFAULT_PAGINATION_NUMBER);
         $searching = false;
-        return view('terrain.index', compact('terrains', 'searching'));
+        return view(self::INDEX, compact('terrains', 'searching'));
     }
 
     public function create(): View
@@ -126,7 +126,7 @@ class TerrainController extends Controller
         } else {
             $terrains = Terrain::paginate(DEFAULT_PAGINATION_NUMBER);
         }
-        return view('terrain.index', compact('terrains', 'searching'));
+        return view(self::INDEX, compact('terrains', 'searching'));
     }
 
     public function export()

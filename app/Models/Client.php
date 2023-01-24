@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Models;
+
+use App\Enums\ClientsStatus;
+use App\StateMachines\ClientStatusStateMachine;
+use Asantibanez\LaravelEloquentStateMachines\Traits\HasStateMachines;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Client extends Model
+{
+    use SoftDeletes, HasStateMachines;
+    protected $fillable = ['nom_complet', 'type_client_id', 'telephone', 'email', 'etat'];
+
+    const RULES = [
+        'nom_complet' => 'required|max:200',
+        'telephone' => 'required|unique:clients,telephone',
+        'email' => 'required|unique:clients,email',
+    ];
+
+    const MESSAGES = [
+        'nom_completed.required' => 'Le nom complet est requis.',
+        'téléphone.required' => 'Le numéro de téléphone est requis.',
+        'email.required' => 'L\'adresse email de téléphone est requise.',
+    ];
+
+    public $stateMachines = [
+        'etat' => ClientStatusStateMachine::class
+    ];
+
+    public function uptodate(): void
+    {
+        $this->etat()->toTransition(to: ClientsStatus::A_JOUR->value, responsible: auth()->user());
+    }
+
+    public function notUptodate(): void
+    {
+        $this->etat()->toTransition(to: ClientsStatus::PAS_A_JOUR->value, responsible: auth()->user());
+    }
+
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(TypeClient::class, 'type_client_id');
+    }
+}

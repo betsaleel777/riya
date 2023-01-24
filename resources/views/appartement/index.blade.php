@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Terrains Archivés')
+@section('title', 'Appartement')
 @section('content')
     <div class="py-4">
         <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -14,19 +14,18 @@
                         </svg>
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="{{ route('terrain.index') }}">Liste des Terrains</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Terrains Archivés</li>
+                <li class="breadcrumb-item active" aria-current="page">Appartement</li>
             </ol>
         </nav>
         <div class="d-flex justify-content-between w-100 flex-wrap">
             <div class="mb-3 mb-lg-0">
-                <h1 class="h4">Terrains</h1>
+                <h1 class="h4">Appartement</h1>
             </div>
             <div>
                 @if ($searching)
-                    <a href="{{ route('terrain.trashed') }}" class="btn btn-primary d-inline-flex align-items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    <a href="{{ route('appartement.index') }}" class="btn btn-primary d-inline-flex align-items-center">
+                        <svg class="icon icon-xs me-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="feather feather-arrow-left">
                             <line x1="19" y1="12" x2="5" y2="12"></line>
                             <polyline points="12 19 5 12 12 5"></polyline>
@@ -34,15 +33,42 @@
                         retour
                     </a>
                 @endif
+                <a href="{{ route('appartement.trashed') }}" class="btn btn-primary d-inline-flex align-items-center">
+                    <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"></path>
+                        <path fill-rule="evenodd"
+                            d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    Archives
+                </a>
+                <a href="{{ route('appartement.export') }}" class="btn btn-primary d-inline-flex align-items-center">
+                    <svg class="icon icon-xs me-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="feather feather-file">
+                        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                        <polyline points="13 2 13 9 20 9"></polyline>
+                    </svg>
+                    Excel
+                </a>
+                <a href="{{ route('appartement.create') }}" class="btn btn-primary d-inline-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="feather feather-plus icon icon-xs me-1">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Nouvel appartement
+                </a>
             </div>
         </div>
     </div>
     <div class="card border-0 shadow mb-4">
         <div class="card-body">
             <div class="mb-3 w-25">
-                <form action="{{ route('terrain.searchTrashed') }}" method="POST">
+                <form action="{{ route('appartement.search') }}" method="POST">
                     @csrf
-                    <input type="text" hidden name="archive" value="1">
                     <div class="input-group">
                         <button type="submit" class="input-group-text" id="basic-addon1">
                             <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20"
@@ -52,7 +78,8 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                        <input type="text" class="form-control" placeholder="Search" name="search" aria-label="Search">
+                        <input type="text" class="form-control" placeholder="Search" name="search"
+                            aria-label="Search">
                     </div>
                 </form>
             </div>
@@ -75,47 +102,50 @@
                         @php
                             $lignes = 1;
                         @endphp
-                        @forelse ($terrains as $terrain)
+                        @forelse ($appartements as $appartement)
                             <tr>
                                 <td>
                                     {{ $lignes++ }}
                                 </td>
                                 <td>
-                                    {{ $terrain->nom }}
+                                    {{ $appartement->nom }}
                                 </td>
                                 <td>
-                                    {{ $terrain->type->nom }}
+                                    {{ $appartement->type->nom }}
                                 </td>
                                 <td>
-                                    {{ $terrain->superficie }}
+                                    {{ $appartement->superficie }}
                                 </td>
                                 <td>
-                                    {{ $terrain->quartier }}
+                                    {{ $appartement->quartier }}
                                 </td>
                                 <td>
-                                    {{ $terrain->proprietaire }}
+                                    {{ $appartement->proprietaire }}
                                 </td>
                                 <td>
-                                    {{ $terrain->montant_location }}
+                                    {{ $appartement->montant_location }}
                                 </td>
                                 <td>
-                                    {{ $terrain->created_at }}
+                                    {{ $appartement->created_at }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('terrain.restore', [$terrain]) }}"
-                                        class="fa-solid fa-lg fa-trash-can-arrow-up btn btn-sm"></a>
-                                    <button
-                                        onclick="question({{ json_encode(['name' => $terrain->nom, 'link' => 'destroy/' . $terrain->id]) }})"
-                                        class="btn btn-link btn-sm">
-                                        <i class="fa-solid fa-lg fa-trash"></i>
-                                    </button>
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-4">
+                                            <a href="{{ route('appartement.edit', [$appartement]) }}"
+                                                class="fa-solid fa-lg fa-edit"></a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="{{ route('appartement.trash', [$appartement]) }}"
+                                                class="fa-solid fa-lg fa-trash-can"></a>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
                                 <td colspan="9">
                                     <div class="alert alert-light text-center" role="alert">
-                                        <h6>Liste des Terrains Archivés vides</h6>
+                                        <h6>Liste des appartements vide</h6>
                                     </div>
                                 </td>
                             </tr>
@@ -123,47 +153,9 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center mt-3">
-                    {!! $terrains->links() !!}
+                    {!! $appartements->links() !!}
                 </div>
             </div>
         </div>
     </div>
-@endsection
-@section('scripts')
-    <script src="{{ asset('theme/vendor/notyf/notyf.min.js') }}"></script>
-    <script src="{{ asset('theme/assets/js/notification.js') }}"></script>
-    <script>
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: 'btn btn-danger mx-2',
-                denyButton: 'btn btn-primary mx-2'
-            },
-            buttonsStyling: false,
-            showDenyButton: true,
-            confirmButtonText: 'valider',
-            denyButtonText: `Abandonner`,
-        });
-
-        function question(payload) {
-            swalWithBootstrapButtons.fire(
-                'SUPPRESSION IRREVERSIBLE',
-                `Voulez-vous réelement supprimer le type: <b>${payload.name}</b> ?`,
-                'question'
-            ).then((result) => {
-                if (result.isConfirmed) {
-                    fetch(payload.link, {
-                        method: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        }
-                    }).then(() => {
-                        notifier('success', `<b>${payload.name}</b> a été définitivement supprimé.`)
-                        setTimeout(() => {
-                            location.reload();
-                        }, "2500")
-                    })
-                }
-            })
-        }
-    </script>
 @endsection

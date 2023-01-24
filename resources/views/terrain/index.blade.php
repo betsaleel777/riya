@@ -88,10 +88,12 @@
                     <thead class="thead-light">
                         <tr>
                             <th class="border-0 rounded-start">#</th>
-                            <th class="border-0 w-20">Nom</th>
-                            <th class="border-0 w-20">Type</th>
-                            <th class="border-0 w-10">Superficie (m²)</th>
-                            <th class="border-0 w-20">Quartier</th>
+                            <th class="border-0">Nom</th>
+                            <th class="border-0">Type</th>
+                            <th class="border-0">Superficie(m²)</th>
+                            <th class="border-0">Quartier</th>
+                            <th class="border-0">Propriétaire</th>
+                            <th class="border-0">Montant location</th>
                             <th class="border-0 w-10">Crée le</th>
                             <th class="border-0 w-10">Options</th>
                         </tr>
@@ -118,6 +120,12 @@
                                     {{ $terrain->quartier }}
                                 </td>
                                 <td>
+                                    {{ $terrain->proprietaire }}
+                                </td>
+                                <td>
+                                    {{ $terrain->montant_location }}
+                                </td>
+                                <td>
                                     {{ $terrain->created_at }}
                                 </td>
                                 <td>
@@ -135,7 +143,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7">
+                                <td colspan="9">
                                     <div class="alert alert-light text-center" role="alert">
                                         <h6>Liste des Terrains vide</h6>
                                     </div>

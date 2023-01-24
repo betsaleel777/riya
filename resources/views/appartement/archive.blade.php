@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Terrains Archivés')
+@section('title', 'Appartements Archivés')
 @section('content')
     <div class="py-4">
         <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -14,17 +14,17 @@
                         </svg>
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="{{ route('terrain.index') }}">Liste des Terrains</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Terrains Archivés</li>
+                <li class="breadcrumb-item"><a href="{{ route('appartement.index') }}">Liste des Appartements</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Appartements Archivés</li>
             </ol>
         </nav>
         <div class="d-flex justify-content-between w-100 flex-wrap">
             <div class="mb-3 mb-lg-0">
-                <h1 class="h4">Terrains</h1>
+                <h1 class="h4">Appartements</h1>
             </div>
             <div>
                 @if ($searching)
-                    <a href="{{ route('terrain.trashed') }}" class="btn btn-primary d-inline-flex align-items-center">
+                    <a href="{{ route('appartement.trashed') }}" class="btn btn-primary d-inline-flex align-items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="feather feather-arrow-left">
@@ -40,7 +40,7 @@
     <div class="card border-0 shadow mb-4">
         <div class="card-body">
             <div class="mb-3 w-25">
-                <form action="{{ route('terrain.searchTrashed') }}" method="POST">
+                <form action="{{ route('appartement.searchTrashed') }}" method="POST">
                     @csrf
                     <input type="text" hidden name="archive" value="1">
                     <div class="input-group">
@@ -75,37 +75,37 @@
                         @php
                             $lignes = 1;
                         @endphp
-                        @forelse ($terrains as $terrain)
+                        @forelse ($appartements as $appartement)
                             <tr>
                                 <td>
                                     {{ $lignes++ }}
                                 </td>
                                 <td>
-                                    {{ $terrain->nom }}
+                                    {{ $appartement->nom }}
                                 </td>
                                 <td>
-                                    {{ $terrain->type->nom }}
+                                    {{ $appartement->type->nom }}
                                 </td>
                                 <td>
-                                    {{ $terrain->superficie }}
+                                    {{ $appartement->superficie }}
                                 </td>
                                 <td>
-                                    {{ $terrain->quartier }}
+                                    {{ $appartement->quartier }}
                                 </td>
                                 <td>
-                                    {{ $terrain->proprietaire }}
+                                    {{ $appartement->proprietaire }}
                                 </td>
                                 <td>
-                                    {{ $terrain->montant_location }}
+                                    {{ $appartement->montant_location }}
                                 </td>
                                 <td>
-                                    {{ $terrain->created_at }}
+                                    {{ $appartement->created_at }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('terrain.restore', [$terrain]) }}"
+                                    <a href="{{ route('appartement.restore', [$appartement]) }}"
                                         class="fa-solid fa-lg fa-trash-can-arrow-up btn btn-sm"></a>
                                     <button
-                                        onclick="question({{ json_encode(['name' => $terrain->nom, 'link' => 'destroy/' . $terrain->id]) }})"
+                                        onclick="question({{ json_encode(['name' => $appartement->nom, 'link' => 'destroy/' . $appartement->id]) }})"
                                         class="btn btn-link btn-sm">
                                         <i class="fa-solid fa-lg fa-trash"></i>
                                     </button>
@@ -115,7 +115,7 @@
                             <tr>
                                 <td colspan="9">
                                     <div class="alert alert-light text-center" role="alert">
-                                        <h6>Liste des Terrains Archivés vides</h6>
+                                        <h6>Liste des Appartements Archivés vides</h6>
                                     </div>
                                 </td>
                             </tr>
@@ -123,7 +123,7 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center mt-3">
-                    {!! $terrains->links() !!}
+                    {!! $appartements->links() !!}
                 </div>
             </div>
         </div>

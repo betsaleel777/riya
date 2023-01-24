@@ -15,7 +15,7 @@ class Appartement extends Model
         'montant_investit', 'pays', 'ville', 'quartier',
         'proprietaire', 'attestation_villageoise', 'titre_foncier',
         'document_cession', 'arreter_approbation', 'cour_commune', 'type_appartement_id',
-        'placard', 'etage', 'cuisine', 'garage', 'parking',
+        'placard', 'etage', 'cuisine', 'garage', 'parking', 'toilette', 'observation', 'cloture', 'cie', 'sodeci',
     ];
 
     protected $with = ['type'];
@@ -36,7 +36,10 @@ class Appartement extends Model
         'garage' => 'boolean',
         'parking' => 'boolean',
         'cloture' => 'boolean',
-        'superficie' => 'boolean',
+        'toilette' => 'boolean',
+        'cie' => 'boolean',
+        'sodeci' => 'boolean',
+        'superficie' => 'integer',
         'montant_location' => 'integer',
         'montant_investit' => 'integer',
     ];
@@ -69,6 +72,7 @@ class Appartement extends Model
         'quartier.required' => 'Le quartier est requis.',
         'quartier.max' => 'Limite de caractère dépassée (70).',
         'proprietaire.required' => 'Le nom du propriétaire est requis.',
+        'proprietaire.max' => 'Limite de caractère dépassée (190).',
         'type_appartement_id.required' => 'Le type de terrain est requis.',
     ];
 

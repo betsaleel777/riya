@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AppartementController;
 use App\Http\Controllers\Categories\CategorieAppartementController;
 use App\Http\Controllers\Categories\CategorieTerrainController;
 use App\Http\Controllers\Categories\TypeClientController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TerrainController;
 use App\Http\Controllers\UserController;
@@ -51,6 +53,18 @@ Route::middleware('auth')->group(function () {
         });
     });
     Route::prefix('appartements')->name('appartement.')->group(function () {
+        Route::get('/', [AppartementController::class, 'index'])->name('index');
+        Route::get('trashed', [AppartementController::class, 'trashed'])->name('trashed');
+        Route::get('create', [AppartementController::class, 'create'])->name('create');
+        Route::get('edit/{id}', [AppartementController::class, 'edit'])->name('edit');
+        Route::get('restore/{id}', [AppartementController::class, 'restore'])->name('restore');
+        Route::get('trash/{id}', [AppartementController::class, 'trash'])->name('trash');
+        Route::delete('destroy/{id}', [AppartementController::class, 'destroy'])->name('destroy');
+        Route::get('export', [AppartementController::class, 'export'])->name('export');
+        Route::post('search', [AppartementController::class, 'search'])->name('search');
+        Route::post('search-trashed', [AppartementController::class, 'searchTrashed'])->name('searchTrashed');
+        Route::post('store', [AppartementController::class, 'store'])->name('store');
+        Route::post('update', [AppartementController::class, 'update'])->name('update');
         Route::prefix('types')->name('type.')->group(function () {
             Route::get('/', [CategorieAppartementController::class, 'index'])->name('index');
             Route::get('trashed', [CategorieAppartementController::class, 'trashed'])->name('trashed');
@@ -67,6 +81,18 @@ Route::middleware('auth')->group(function () {
         });
     });
     Route::prefix('clients')->name('client.')->group(function () {
+        Route::get('/', [ClientController::class, 'index'])->name('index');
+        Route::get('trashed', [ClientController::class, 'trashed'])->name('trashed');
+        Route::get('create', [ClientController::class, 'create'])->name('create');
+        Route::get('edit/{id}', [ClientController::class, 'edit'])->name('edit');
+        Route::get('restore/{id}', [ClientController::class, 'restore'])->name('restore');
+        Route::get('trash/{id}', [ClientController::class, 'trash'])->name('trash');
+        Route::get('export', [ClientController::class, 'export'])->name('export');
+        Route::post('search', [ClientController::class, 'search'])->name('search');
+        Route::post('search-trashed', [ClientController::class, 'searchTrashed'])->name('searchTrashed');
+        Route::delete('destroy/{id}', [ClientController::class, 'destroy'])->name('destroy');
+        Route::post('store', [ClientController::class, 'store'])->name('store');
+        Route::post('update', [ClientController::class, 'update'])->name('update');
         Route::prefix('types')->name('type.')->group(function () {
             Route::get('/', [TypeClientController::class, 'index'])->name('index');
             Route::get('trashed', [TypeClientController::class, 'trashed'])->name('trashed');

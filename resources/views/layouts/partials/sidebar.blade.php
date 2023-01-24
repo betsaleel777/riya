@@ -89,7 +89,7 @@
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a href="../../pages/transactions.html" class="nav-link">
+                    <a href="{{ route('client.index') }}" class="nav-link">
                         <span class="sidebar-icon">
                             <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -99,7 +99,7 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </span>
-                        <span class="sidebar-text">Transactions</span>
+                        <span class="sidebar-text">Clients</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -131,6 +131,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('terrain.index') }}">
                                     <span class="sidebar-text">Terrains</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('appartement.index') }}">
+                                    <span class="sidebar-text">Appartements</span>
                                 </a>
                             </li>
                         </ul>

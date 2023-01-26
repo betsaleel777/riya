@@ -13,11 +13,11 @@ class Terrain extends Model
     protected $fillable = [
         'reference', 'nom', 'superficie', 'montant_location',
         'montant_investit', 'pays', 'ville', 'quartier',
-        'proprietaire', 'attestation_villageoise', 'titre_foncier',
+        'proprietaire_id', 'attestation_villageoise', 'titre_foncier',
         'document_cession', 'arreter_approbation', 'type_terrain_id',
     ];
 
-    protected $with = ['type'];
+    protected $with = ['type', 'proprietaire'];
     /**
      * The attributes that should be cast.
      *
@@ -41,7 +41,7 @@ class Terrain extends Model
         'pays' => 'required|max:50',
         'ville' => 'required|max:50',
         'quartier' => 'required|max:70',
-        'proprietaire' => 'required|max:190',
+        'proprietaire_id' => 'required',
         'type_terrain_id' => 'required',
     ];
 
@@ -60,7 +60,7 @@ class Terrain extends Model
         'ville.max' => 'Limite de caractère dépassée (50).',
         'quartier.required' => 'Le quartier est requis.',
         'quartier.max' => 'Limite de caractère dépassée (70).',
-        'proprietaire.required' => 'Le nom du propriétaire est requis.',
+        'proprietaire_id.required' => 'Le propriétaire est requis.',
         'type_terrain_id.required' => 'Le type de terrain est requis.',
     ];
 
@@ -73,5 +73,10 @@ class Terrain extends Model
     public function type(): BelongsTo
     {
         return $this->belongsTo(TypeTerrain::class, 'type_terrain_id');
+    }
+
+    public function proprietaire(): BelongsTo
+    {
+        return $this->belongsTo(Proprietaire::class);
     }
 }

@@ -93,7 +93,7 @@
                                     {{ $appartement->quartier }}
                                 </td>
                                 <td>
-                                    {{ $appartement->proprietaire }}
+                                    {{ $appartement->proprietaire->nom_complet }}
                                 </td>
                                 <td>
                                     {{ $appartement->montant_location }}

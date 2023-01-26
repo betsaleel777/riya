@@ -120,7 +120,7 @@
                                     {{ $terrain->quartier }}
                                 </td>
                                 <td>
-                                    {{ $terrain->proprietaire }}
+                                    {{ $terrain->proprietaire->nom_complet }}
                                 </td>
                                 <td>
                                     {{ $terrain->montant_location }}

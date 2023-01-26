@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\AppartementExport;
 use App\Models\Appartement;
+use App\Models\Proprietaire;
 use App\Models\TypeAppartement;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -44,7 +45,8 @@ class AppartementController extends Controller
     public function create(): View
     {
         $types = TypeAppartement::get();
-        return view('appartement.create', compact('types'));
+        $proprietaires = Proprietaire::get();
+        return view('appartement.create', compact('types', 'proprietaires'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -62,7 +64,8 @@ class AppartementController extends Controller
     {
         $appartement = Appartement::findOrFail($id);
         $types = TypeAppartement::get();
-        return view('appartement.edit', compact('appartement', 'types'));
+        $proprietaires = Proprietaire::get();
+        return view('appartement.edit', compact('appartement', 'types', 'proprietaires'));
     }
 
     public function update(Request $request): RedirectResponse
@@ -145,6 +148,6 @@ class AppartementController extends Controller
 
     public function export()
     {
-        return Excel::download(new AppartementExport, 'type_appartement_id.xlsx');
+        return Excel::download(new AppartementExport, 'appartements.xlsx');
     }
 }

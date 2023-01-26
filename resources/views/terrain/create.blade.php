@@ -102,15 +102,6 @@
                         @enderror
                     </div>
                     <div class="col-sm-6 mb-3">
-                        <label for="proprietaire">Propriétaire</label>
-                        <input value="{{ old('proprietaire') }}" type="text"
-                            class="form-control @error('proprietaire') is-invalid @enderror" id="proprietaire"
-                            name="proprietaire">
-                        @error('proprietaire')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
                     </div>
                     <div class="col-sm-6 mb-3">
                         <div class="row container">
@@ -164,6 +155,23 @@
                             </div>
                         @enderror
                     </div>
+                    <div class="col-sm-6 mb-3">
+                        <label for="proprietaire_id">Propriétaire</label>
+                        <select class="form-control @error('proprietaire_id') is-invalid @enderror" id="proprietaire_id"
+                            name="proprietaire_id">
+                            <option disabled selected>selection du propriétaire</option>
+                            @foreach ($proprietaires as $proprietaire)
+                                <option @if (old('proprietaire_id') == $proprietaire->id) selected @endif
+                                    value="{{ $proprietaire->id }}">
+                                    {{ $proprietaire->nom_complet }}</option>
+                            @endforeach
+                        </select>
+                        @error('proprietaire_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                 </div>
                 <div class="">
                     <button class="btn btn-primary" type="submit">créer</button>
@@ -176,6 +184,9 @@
     <script>
         new SlimSelect({
             select: '#type'
+        })
+        new SlimSelect({
+            select: '#proprietaire_id'
         })
     </script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\TerrainExport;
+use App\Models\Proprietaire;
 use App\Models\Terrain;
 use App\Models\TypeTerrain;
 use Illuminate\Contracts\View\View;
@@ -25,7 +26,8 @@ class TerrainController extends Controller
     public function create(): View
     {
         $types = TypeTerrain::get();
-        return view('terrain.create', compact('types'));
+        $proprietaires = Proprietaire::get();
+        return view('terrain.create', compact('proprietaires', 'types'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -46,7 +48,8 @@ class TerrainController extends Controller
     {
         $terrain = Terrain::findOrFail($id);
         $types = TypeTerrain::get();
-        return view('terrain.edit', compact('terrain', 'types'));
+        $proprietaires = Proprietaire::get();
+        return view('terrain.edit', compact('proprietaires', 'terrain', 'types'));
     }
 
     public function update(Request $request): RedirectResponse

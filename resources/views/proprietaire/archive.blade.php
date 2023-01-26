@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Archives Types de Clients')
+@section('title', 'Propriétaires Archivés')
 @section('content')
     <div class="py-4">
         <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -14,17 +14,17 @@
                         </svg>
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="{{ route('client.type.index') }}">Types de Clients</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Types Archivés</li>
+                <li class="breadcrumb-item"><a href="{{ route('proprietaire.index') }}">Liste des Propriétaires</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Propriétaires Archivés</li>
             </ol>
         </nav>
         <div class="d-flex justify-content-between w-100 flex-wrap">
             <div class="mb-3 mb-lg-0">
-                <h1 class="h4">Types Archivés</h1>
+                <h1 class="h4">Propriétaires</h1>
             </div>
             <div>
                 @if ($searching)
-                    <a href="{{ route('client.type.trashed') }}" class="btn btn-primary d-inline-flex align-items-center">
+                    <a href="{{ route('proprietaire.trashed') }}" class="btn btn-primary d-inline-flex align-items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="feather feather-arrow-left">
@@ -40,7 +40,7 @@
     <div class="card border-0 shadow mb-4">
         <div class="card-body">
             <div class="mb-3 w-25">
-                <form action="{{ route('client.type.searchTrashed') }}" method="POST">
+                <form action="{{ route('proprietaire.searchTrashed') }}" method="POST">
                     @csrf
                     <input type="text" hidden name="archive" value="1">
                     <div class="input-group">
@@ -61,8 +61,11 @@
                     <thead class="thead-light">
                         <tr>
                             <th class="border-0 rounded-start">#</th>
-                            <th class="border-0 w-50">Nom</th>
-                            <th class="border-0 w-50">Supprimé le</th>
+                            <th class="border-0">Nom complet</th>
+                            <th class="border-0">Email</th>
+                            <th class="border-0">Téléphone</th>
+                            <th class="border-0">CNI</th>
+                            <th class="border-0 w-10">Crée le</th>
                             <th class="border-0 w-10">Options</th>
                         </tr>
                     </thead>
@@ -70,22 +73,31 @@
                         @php
                             $lignes = 1;
                         @endphp
-                        @forelse ($types as $type)
+                        @forelse ($proprietaires as $proprietaire)
                             <tr>
                                 <td>
                                     {{ $lignes++ }}
                                 </td>
                                 <td>
-                                    {{ $type->nom }}
+                                    {{ $proprietaire->nom_complet }}
                                 </td>
                                 <td>
-                                    {{ $type->deleted_at }}
+                                    {{ $proprietaire?->email ?: 'Aucun email' }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('client.type.restore', [$type]) }}"
+                                    {{ $proprietaire->telephone }}
+                                </td>
+                                <td>
+                                    {{ $proprietaire->cni }}
+                                </td>
+                                <td>
+                                    {{ $proprietaire->created_at }}
+                                </td>
+                                <td>
+                                    <a href="{{ route('proprietaire.restore', [$proprietaire]) }}"
                                         class="fa-solid fa-lg fa-trash-can-arrow-up btn btn-sm"></a>
                                     <button
-                                        onclick="question({{ json_encode(['name' => $type->nom, 'link' => 'destroy/' . $type->id]) }})"
+                                        onclick="question({{ json_encode(['name' => $proprietaire->nom_complet, 'link' => 'destroy/' . $proprietaire->id]) }})"
                                         class="btn btn-link btn-sm">
                                         <i class="fa-solid fa-lg fa-trash"></i>
                                     </button>
@@ -93,9 +105,9 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4">
+                                <td colspan="7">
                                     <div class="alert alert-light text-center" role="alert">
-                                        <h6>Types de terrains archivés vide</h6>
+                                        <h6>Liste des proprietaires vide</h6>
                                     </div>
                                 </td>
                             </tr>
@@ -103,7 +115,7 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center mt-3">
-                    {!! $types->links() !!}
+                    {!! $proprietaires->links() !!}
                 </div>
             </div>
         </div>
@@ -141,7 +153,6 @@
                         setTimeout(() => {
                             location.reload();
                         }, "2500")
-
                     })
                 }
             })

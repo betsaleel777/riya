@@ -83,21 +83,13 @@
                                     {{ $type->deleted_at }}
                                 </td>
                                 <td>
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-4">
-                                            <a href="{{ route('appartement.type.restore', [$type]) }}"
-                                                class="fa-solid fa-lg fa-trash-can-arrow-up"></a>
-                                        </div>
-                                        <div class="col-4">
-                                            <button
-                                                onclick="question({{ json_encode(['name' => $type->nom, 'link' => 'destroy/' . $type->id]) }})"
-                                                class="btn btn-link btn-sm">
-                                                <i class="fa-solid fa-lg fa-trash"></i>
-                                            </button>
-                                            {{-- <a href="{{ route('appartement.type.delete', [$type]) }}"
-                                                ></a> --}}
-                                        </div>
-                                    </div>
+                                    <a href="{{ route('appartement.type.restore', [$type]) }}"
+                                        class="fa-solid fa-lg fa-trash-can-arrow-up btn btn-sm"></a>
+                                    <button
+                                        onclick="question({{ json_encode(['name' => $type->nom, 'link' => 'destroy/' . $type->id]) }})"
+                                        class="btn btn-link btn-sm">
+                                        <i class="fa-solid fa-lg fa-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @empty

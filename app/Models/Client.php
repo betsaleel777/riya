@@ -12,19 +12,32 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Client extends Model
 {
     use SoftDeletes, HasStateMachines;
-    protected $fillable = ['nom_complet', 'type_client_id', 'telephone', 'email', 'etat'];
+    protected $fillable = ['nom_complet', 'type_client_id', 'telephone', 'email', 'cni', 'etat'];
 
     const RULES = [
         'nom_complet' => 'required|max:200',
         'telephone' => 'required|unique:clients,telephone',
-        'email' => 'required|unique:clients,email',
+        'email' => 'nullable|unique:clients,email',
+        'cni' => 'required|unique:clients,cni',
     ];
 
     const MESSAGES = [
-        'nom_completed.required' => 'Le nom complet est requis.',
-        'téléphone.required' => 'Le numéro de téléphone est requis.',
-        'email.required' => 'L\'adresse email de téléphone est requise.',
+        'nom_complet.required' => 'Le nom complet est requis.',
+        'telephone.required' => 'Le numéro de téléphone est requis.',
+        'email.unique' => 'Cette adresse email est déjà utilisée.',
+        'cni.required' => 'La CNI est requise.',
+        'cni.unique' => 'Cette CNI est déjà utilisée.'
     ];
+
+    public static function editRules(int $id): array
+    {
+        return [
+            'nom_complet' => 'required|max:200',
+            'telephone' => 'required|unique:clients,telephone,' . $id,
+            'email' => 'nullable|unique:clients,email,' . $id,
+            'cni' => 'required|unique:clients,cni,' . $id,
+        ];
+    }
 
     public $stateMachines = [
         'etat' => ClientStatusStateMachine::class

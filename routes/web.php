@@ -6,6 +6,7 @@ use App\Http\Controllers\Categories\CategorieTerrainController;
 use App\Http\Controllers\Categories\TypeClientController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProprietaireController;
 use App\Http\Controllers\TerrainController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::prefix('proprietaire')->name('proprietaire.')->group(function () {
+        Route::get('/', [ProprietaireController::class, 'index'])->name('index');
+        Route::get('trashed', [ProprietaireController::class, 'trashed'])->name('trashed');
+        Route::get('create', [ProprietaireController::class, 'create'])->name('create');
+        Route::get('edit/{id}', [ProprietaireController::class, 'edit'])->name('edit');
+        Route::get('restore/{id}', [ProprietaireController::class, 'restore'])->name('restore');
+        Route::get('trash/{id}', [ProprietaireController::class, 'trash'])->name('trash');
+        Route::delete('destroy/{id}', [ProprietaireController::class, 'destroy'])->name('destroy');
+        Route::get('export', [ProprietaireController::class, 'export'])->name('export');
+        Route::post('search', [ProprietaireController::class, 'search'])->name('search');
+        Route::post('search-trashed', [ProprietaireController::class, 'searchTrashed'])->name('searchTrashed');
+        Route::post('store', [ProprietaireController::class, 'store'])->name('store');
+        Route::post('update', [ProprietaireController::class, 'update'])->name('update');
+    });
     Route::prefix('terrains')->name('terrain.')->group(function () {
         Route::get('/', [TerrainController::class, 'index'])->name('index');
         Route::get('trashed', [TerrainController::class, 'trashed'])->name('trashed');

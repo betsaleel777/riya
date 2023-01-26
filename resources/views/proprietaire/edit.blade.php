@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Modifier client ' . $client->nom_complet)
+@section('title', 'Modifier propriétaire ' . $proprietaire->nom_complet)
 @section('links')
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet" />
@@ -18,20 +18,20 @@
                         </svg>
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="{{ route('client.index') }}">Clients</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $client->nom_complet }}</li>
+                <li class="breadcrumb-item"><a href="{{ route('proprietaire.index') }}">Propriétaire</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $proprietaire->nom_complet }}</li>
             </ol>
         </nav>
     </div>
     <div class="card border-0 shadow mb-4">
         <div class="card-body">
-            <form action="{{ route('client.update') }}" method="post">
+            <form action="{{ route('proprietaire.update') }}" method="post">
                 @csrf
-                <input type="text" hidden value="{{ $client->id }}" name="client">
+                <input type="text" hidden name="proprietaire" value="{{ $proprietaire->id }}">
                 <div class="row">
                     <div class="col-sm-6 mb-3">
                         <label for="nom_complet">Nom complet</label>
-                        <input value="{{ $client->nom_complet }}" type="text"
+                        <input value="{{ $proprietaire->nom_complet }}" type="text"
                             class="form-control @error('nom_complet') is-invalid @enderror" id="nom_complet"
                             name="nom_complet">
                         @error('nom_complet')
@@ -42,7 +42,7 @@
                     </div>
                     <div class="col-sm-6 mb-3">
                         <label for="telephone">Téléphone</label>
-                        <input value="{{ $client->telephone }}" type="text"
+                        <input value="{{ $proprietaire->telephone }}" type="text"
                             class="form-control @error('telephone') is-invalid @enderror" id="telephone" name="telephone">
                         @error('telephone')
                             <div class="invalid-feedback">
@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-sm-6 mb-3">
                         <label for="cni">CNI</label>
-                        <input value="{{ $client->cni }}" type="text"
+                        <input value="{{ $proprietaire->cni }}" type="text"
                             class="form-control @error('cni') is-invalid @enderror" id="cni" name="cni">
                         @error('cni')
                             <div class="invalid-feedback">
@@ -62,7 +62,7 @@
                     </div>
                     <div class="col-sm-6 mb-3">
                         <label for="email">Email</label>
-                        <input value="{{ $client->email }}" type="text"
+                        <input value="{{ $proprietaire->email }}" type="text"
                             class="form-control @error('email') is-invalid @enderror" type="email" id="email"
                             name="email">
                         @error('email')
@@ -72,14 +72,26 @@
                         @enderror
                     </div>
                     <div class="col-sm-6 mb-3">
-                        <label for="type">Types de clients</label>
-                        <select class="form-control" id="type" name="type_client_id">
-                            <option disabled selected>selection du type de client</option>
-                            @foreach ($types as $type)
-                                <option @if ($client->type_client_id === $type->id) selected @endif value="{{ $type->id }}">
-                                    {{ $type->nom }}</option>
-                            @endforeach
-                        </select>
+                        <label for="commission_terrain">Commision terrain</label>
+                        <input value="{{ $proprietaire->commission_terrain }}" type="text"
+                            class="form-control @error('commission_terrain') is-invalid @enderror" id="commission_terrain"
+                            name="commission_terrain">
+                        @error('commission_terrain')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label for="commission_appartement">Commision appartement</label>
+                        <input value="{{ $proprietaire->commission_appartement }}" type="text"
+                            class="form-control @error('commission_appartement') is-invalid @enderror"
+                            id="commission_appartement" name="commission_appartement">
+                        @error('commission_appartement')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="">

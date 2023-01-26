@@ -70,8 +70,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="https://demo.themesberg.com/volt-pro/pages/kanban.html" target="_blank"
-                        class="nav-link d-flex justify-content-between">
+                    <a href="{{ route('proprietaire.index') }}" class="nav-link d-flex justify-content-between">
                         <span>
                             <span class="sidebar-icon">
                                 <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20"
@@ -81,10 +80,7 @@
                                     </path>
                                 </svg>
                             </span>
-                            <span class="sidebar-text">Kanban</span>
-                        </span>
-                        <span>
-                            <span class="badge badge-sm bg-secondary ms-1 text-gray-800">Pro</span>
+                            <span class="sidebar-text">Propriétaires</span>
                         </span>
                     </a>
                 </li>

@@ -113,7 +113,7 @@
                                     {{ $client->type?->nom ?: 'Aucun type' }}
                                 </td>
                                 <td>
-                                    {{ $client->email }}
+                                    {{ $client?->email ?: 'Aucun email' }}
                                 </td>
                                 <td>
                                     {{ $client->telephone }}

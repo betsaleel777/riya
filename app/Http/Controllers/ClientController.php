@@ -46,7 +46,7 @@ class ClientController extends Controller
 
     public function update(Request $request): RedirectResponse
     {
-        $request->validate(Client::editRules($request->type), Client::MESSAGES);
+        $request->validate(Client::editRules($request->client), Client::MESSAGES);
         $client = Client::findOrFail($request->client);
         $client->update($request->all());
         session()->flash('success', "Le client a été modifié avec succès.");
@@ -87,7 +87,7 @@ class ClientController extends Controller
     {
         $searching = false;
         if ($request->filled('search') and $request->has('archive')) {
-            $found = Client::where('nom', 'LIKE', "%$request->search%")->onlyTrashed();
+            $found = Client::where('nom_complet', 'LIKE', "%$request->search%")->onlyTrashed();
             $clients = $found->paginate(DEFAULT_PAGINATION_NUMBER);
             $searching = true;
             session()->flash('info', count($found->get()) . " client(s) archivé(s) trouvé(s)");
@@ -101,7 +101,7 @@ class ClientController extends Controller
     {
         $searching = false;
         if ($request->filled('search')) {
-            $found = Client::where('nom', 'LIKE', "%$request->search%");
+            $found = Client::where('nom_complet', 'LIKE', "%$request->search%");
             $clients = $found->paginate(DEFAULT_PAGINATION_NUMBER);
             $searching = true;
             session()->flash('info', count($found->get()) . " client(s) trouvé(s)");

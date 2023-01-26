@@ -50,6 +50,16 @@
                         @enderror
                     </div>
                     <div class="col-sm-6 mb-3">
+                        <label for="cni">CNI</label>
+                        <input value="{{ old('cni') }}" type="text"
+                            class="form-control @error('cni') is-invalid @enderror" id="cni" name="cni">
+                        @error('cni')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="col-sm-6 mb-3">
                         <label for="email">Email</label>
                         <input value="{{ old('email') }}" type="text"
                             class="form-control @error('email') is-invalid @enderror" type="email" id="email"

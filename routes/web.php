@@ -5,6 +5,7 @@ use App\Http\Controllers\Categories\CategorieAppartementController;
 use App\Http\Controllers\Categories\CategorieTerrainController;
 use App\Http\Controllers\Categories\TypeClientController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ContratController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProprietaireController;
 use App\Http\Controllers\TerrainController;
@@ -38,6 +39,17 @@ Route::middleware('auth')->group(function () {
         Route::post('search-trashed', [ProprietaireController::class, 'searchTrashed'])->name('searchTrashed');
         Route::post('store', [ProprietaireController::class, 'store'])->name('store');
         Route::post('update', [ProprietaireController::class, 'update'])->name('update');
+    });
+    Route::prefix('contrat')->name('contrat.')->group(function () {
+        Route::get('/', [ContratController::class, 'index'])->name('index');
+        Route::get('aborted', [ContratController::class, 'aborted'])->name('aborted');
+        Route::get('create', [ContratController::class, 'create'])->name('create');
+        Route::get('edit/{id}', [ContratController::class, 'edit'])->name('edit');
+        Route::get('export', [ContratController::class, 'export'])->name('export');
+        Route::post('search', [ContratController::class, 'search'])->name('search');
+        Route::post('search-trashed', [ContratController::class, 'searchTrashed'])->name('searchTrashed');
+        Route::post('store', [ContratController::class, 'store'])->name('store');
+        Route::post('update', [ContratController::class, 'update'])->name('update');
     });
     Route::prefix('terrains')->name('terrain.')->group(function () {
         Route::get('/', [TerrainController::class, 'index'])->name('index');

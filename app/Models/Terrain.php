@@ -67,7 +67,7 @@ class Terrain extends Model
     public function codeGenerate(): void
     {
         $rang = $this->count() + 1;
-        $this->attributes['reference'] = TERRAIN_CODE_PREFIXE . str_pad((string) $rang, 7, '0', STR_PAD_LEFT);
+        $this->attributes['reference'] = TERRAIN_CODE_PREFIXE . str_pad((string) $rang, DEFAULT_PAD_LEFT_NUMBER, '0', STR_PAD_LEFT);
     }
 
     public function type(): BelongsTo
@@ -78,5 +78,10 @@ class Terrain extends Model
     public function proprietaire(): BelongsTo
     {
         return $this->belongsTo(Proprietaire::class);
+    }
+
+    public function contrats()
+    {
+        return $this->morphToMany(Contrat::class, 'possedable');
     }
 }

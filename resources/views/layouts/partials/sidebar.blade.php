@@ -236,7 +236,7 @@
                                     <path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"></path>
                                 </svg>
                             </span>
-                            <span class="sidebar-text">Page examples</span>
+                            <span class="sidebar-text">finances</span>
                         </span>
                         <span class="link-arrow">
                             <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20"
@@ -250,38 +250,8 @@
                     <div class="multi-level collapse " role="list" id="submenu-pages" aria-expanded="false">
                         <ul class="flex-column nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="../../pages/examples/sign-in.html">
-                                    <span class="sidebar-text">Sign In</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../../pages/examples/sign-up.html">
-                                    <span class="sidebar-text">Sign Up</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../../pages/examples/forgot-password.html">
-                                    <span class="sidebar-text">Forgot password</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../../pages/examples/reset-password.html">
-                                    <span class="sidebar-text">Reset password</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../../pages/examples/lock.html">
-                                    <span class="sidebar-text">Lock</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../../pages/examples/404.html">
-                                    <span class="sidebar-text">404 Not Found</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../../pages/examples/500.html">
-                                    <span class="sidebar-text">500 Not Found</span>
+                                <a class="nav-link" href="{{ route('contrat.index') }}">
+                                    <span class="sidebar-text">Contrats</span>
                                 </a>
                             </li>
                         </ul>

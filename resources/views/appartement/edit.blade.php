@@ -292,6 +292,17 @@
                         </div>
                     </div>
                     <div class="col-sm-6 mb-3">
+                        <label for="cout_achat">Coût d'achat</label>
+                        <input value="{{ $appartement->cout_achat }}" type="text"
+                            class="form-control @error('cout_achat') is-invalid @enderror" id="cout_achat"
+                            name="cout_achat">
+                        @error('cout_achat')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="col-sm-6 mb-3">
                         <label for="type">Types d'appartements</label>
                         <select class="form-control @error('type_appartement_id') is-invalid @enderror" id="type"
                             name="type_appartement_id">

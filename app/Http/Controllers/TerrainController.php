@@ -63,7 +63,8 @@ class TerrainController extends Controller
         $terrain->pays = $request->pays;
         $terrain->ville = $request->ville;
         $terrain->quartier = $request->quartier;
-        $terrain->proprietaire = $request->proprietaire;
+        $terrain->cout_achat = $request->cout_achat;
+        $terrain->proprietaire_id = $request->proprietaire_id;
         $terrain->type_terrain_id = $request->type_terrain_id;
         $terrain->titre_foncier = $request->has('titre_foncier');
         $terrain->attestation_villageoise = $request->has('attestation_villageoise');

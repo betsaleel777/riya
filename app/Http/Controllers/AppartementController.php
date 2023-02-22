@@ -79,8 +79,9 @@ class AppartementController extends Controller
         $appartement->pays = $request->pays;
         $appartement->ville = $request->ville;
         $appartement->quartier = $request->quartier;
-        $appartement->proprietaire = $request->proprietaire;
+        $appartement->proprietaire_id = $request->proprietaire_id;
         $appartement->type_appartement_id = $request->type_appartement_id;
+        $appartement->cout_achat = $request->cout_achat;
         $appartement->observation = $request->observation;
         $appartement = self::hydrateBool($appartement, $request);
         $appartement->save();

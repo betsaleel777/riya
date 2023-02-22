@@ -13,7 +13,7 @@ class Appartement extends Model
     protected $fillable = [
         'reference', 'nom', 'superficie', 'montant_location',
         'montant_investit', 'pays', 'ville', 'quartier',
-        'proprietaire_id', 'attestation_villageoise', 'titre_foncier',
+        'proprietaire_id', 'attestation_villageoise', 'titre_foncier', 'cout_achat',
         'document_cession', 'arreter_approbation', 'cour_commune', 'type_appartement_id',
         'placard', 'etage', 'cuisine', 'garage', 'parking', 'toilette', 'observation', 'cloture', 'cie', 'sodeci',
     ];
@@ -42,6 +42,7 @@ class Appartement extends Model
         'superficie' => 'integer',
         'montant_location' => 'integer',
         'montant_investit' => 'integer',
+        'cout_achat' => 'integer'
     ];
 
     const RULES = [
@@ -49,6 +50,7 @@ class Appartement extends Model
         'superficie' => 'required|numeric',
         'montant_location' => 'required|numeric',
         'montant_investit' => 'required|numeric',
+        'cout_achat' => 'required|numeric',
         'pays' => 'required|max:50',
         'ville' => 'required|max:50',
         'quartier' => 'required|max:70',
@@ -65,6 +67,8 @@ class Appartement extends Model
         'montant_location.numeric' => 'Le montant de location doit être numérique.',
         'montant_investit.required' => 'Le montant investit est requis.',
         'montant_investit.numeric' => 'Le montant investit doit être numérique.',
+        'cout_achat.required' => 'Le coût d\'achat est requis.',
+        'cout_achat.numeric' => 'Le coût d\'achat investit doit être numérique.',
         'pays.required' => 'Le pays est requis.',
         'pays.max' => 'Limite de caractère dépassée (50).',
         'ville.required' => 'La ville est requise.',

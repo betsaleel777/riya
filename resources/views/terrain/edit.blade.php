@@ -103,6 +103,15 @@
                         @enderror
                     </div>
                     <div class="col-sm-6 mb-3">
+                        <label for="cout_achat">Coût d'achat</label>
+                        <input value="{{ $terrain->cout_achat }}" type="text"
+                            class="form-control @error('cout_achat') is-invalid @enderror" id="cout_achat"
+                            name="cout_achat">
+                        @error('cout_achat')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="col-sm-6 mb-3">
                         <div class="row container">

@@ -2,10 +2,10 @@
 
 namespace App\StateMachines;
 
-use App\Enums\ContratStatus;
+use App\Enums\FactureStatus;
 use Asantibanez\LaravelEloquentStateMachines\StateMachines\StateMachine;
 
-class ContratStateMachine extends StateMachine
+class FactureStateMachine extends StateMachine
 {
     public function recordHistory(): bool
     {
@@ -15,13 +15,13 @@ class ContratStateMachine extends StateMachine
     public function transitions(): array
     {
         return [
-            ContratStatus::UNVALIDATED->value => ContratStatus::VALIDATED->value,
-            ContratStatus::VALIDATED->value => ContratStatus::ABORTED->value
+            FactureStatus::UNPAID->value => FactureStatus::PAID->value,
+            FactureStatus::PAID->value => FactureStatus::UNPAID->value
         ];
     }
 
     public function defaultState(): string
     {
-        return ContratStatus::UNVALIDATED->value;
+        return FactureStatus::UNPAID->value;
     }
 }

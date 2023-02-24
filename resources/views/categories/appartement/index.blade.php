@@ -107,7 +107,7 @@
                                     {{ $type->nom }}
                                 </td>
                                 <td>
-                                    {{ $type->created_at }}
+                                    {{ $type->created_at->format('d-m-Y') }}
                                 </td>
                                 <td>
                                     <div class="row d-flex align-items-center">

@@ -13,6 +13,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
+    protected $dates = ['created_at'];
     /**
      * The attributes that are mass assignable.
      *
@@ -71,16 +72,16 @@ class User extends Authenticatable
     public static function editRules(int $id, Bool $password): array
     {
         return $password ?
-        [
-            'name' => 'required|max:60|unique:users,name,' . $id,
-            'email' => 'required|unique:users,email,' . $id,
-            'password' => 'required|confirmed|min:6',
-            'password_confirmation' => 'required',
-        ]
-        : [
-            'name' => 'required|max:60|unique:users,name,' . $id,
-            'email' => 'required|unique:users,email,' . $id,
-            'phone' => 'nullable|unique:users,phone,' . $id,
-        ];
+            [
+                'name' => 'required|max:60|unique:users,name,' . $id,
+                'email' => 'required|unique:users,email,' . $id,
+                'password' => 'required|confirmed|min:6',
+                'password_confirmation' => 'required',
+            ]
+            : [
+                'name' => 'required|max:60|unique:users,name,' . $id,
+                'email' => 'required|unique:users,email,' . $id,
+                'phone' => 'nullable|unique:users,phone,' . $id,
+            ];
     }
 }

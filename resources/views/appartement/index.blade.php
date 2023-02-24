@@ -123,10 +123,10 @@
                                     {{ $appartement->proprietaire->nom_complet }}
                                 </td>
                                 <td>
-                                    {{ $appartement->montant_location }}
+                                    @money($appartement->montant_location, 'XOF')
                                 </td>
                                 <td>
-                                    {{ $appartement->created_at }}
+                                    {{ $appartement->created_at->format('d-m-Y') }}
                                 </td>
                                 <td>
                                     <div class="row d-flex align-items-center">

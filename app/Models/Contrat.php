@@ -5,9 +5,12 @@ namespace App\Models;
 use App\Enums\ContratStatus;
 use App\StateMachines\ContratStateMachine;
 use Asantibanez\LaravelEloquentStateMachines\Traits\HasStateMachines;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Str;
+
 
 class Contrat extends Model
 {
@@ -15,6 +18,7 @@ class Contrat extends Model
 
     protected $fillable = ['reference', 'debut', 'fin', 'client_id', 'status'];
 
+    protected $dates = ['debut', 'fin', 'created_at'];
     const RULES = [
         'debut' => 'required',
         'fin' => 'required',
@@ -41,6 +45,13 @@ class Contrat extends Model
     public $stateMachines = [
         'status' => ContratStateMachine::class
     ];
+
+    protected function possedableType(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => Str::of($value)->afterLast('\\'),
+        );
+    }
 
     public function codeGenerate(): void
     {

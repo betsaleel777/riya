@@ -19,7 +19,8 @@ class ClientController extends Controller
     {
         $clients = Client::paginate(DEFAULT_PAGINATION_NUMBER);
         $searching = false;
-        return view('locataire.index', compact('clients', 'searching'));
+        $criteres = Client::CRITERES;
+        return view('locataire.index', compact('clients', 'searching', 'criteres'));
     }
 
     public function create(): View
@@ -65,7 +66,8 @@ class ClientController extends Controller
     {
         $clients = Client::onlyTrashed()->orderBy('id', 'DESC')->paginate(DEFAULT_PAGINATION_NUMBER);
         $searching = false;
-        return view('locataire.archive', compact('clients', 'searching'));
+        $criteres = Client::CRITERES;
+        return view('locataire.archive', compact('clients', 'searching', 'criteres'));
     }
 
     public function restore(int $id): RedirectResponse
@@ -85,11 +87,12 @@ class ClientController extends Controller
 
     public function searchTrashed(Request $request): View
     {
-        $searching = false;
+        $searching = true;
         if ($request->filled('search') and $request->has('archive')) {
-            $found = Client::where('nom_complet', 'LIKE', "%$request->search%")->onlyTrashed();
+            $keyword = $request->string('search')->trim();
+            $found = Client::onlyTrashed()->where($request->critere, 'LIKE', "%$keyword%")
+                ->orWhere($request->critere, $keyword);
             $clients = $found->paginate(DEFAULT_PAGINATION_NUMBER);
-            $searching = true;
             session()->flash('info', count($found->get()) . " client(s) archivé(s) trouvé(s)");
         } else {
             $clients = Client::onlyTrashed()->paginate(DEFAULT_PAGINATION_NUMBER);
@@ -99,11 +102,11 @@ class ClientController extends Controller
 
     public function search(Request $request): View
     {
-        $searching = false;
+        $searching = true;
         if ($request->filled('search')) {
-            $found = Client::where('nom_complet', 'LIKE', "%$request->search%");
+            $keyword = $request->string('search')->trim();
+            $found = Client::where($request->critere, 'LIKE', "%$keyword%")->orWhere($request->critere, $keyword);
             $clients = $found->paginate(DEFAULT_PAGINATION_NUMBER);
-            $searching = true;
             session()->flash('info', count($found->get()) . " client(s) trouvé(s)");
         } else {
             $clients = Client::paginate(DEFAULT_PAGINATION_NUMBER);

@@ -21,7 +21,7 @@ class ClientStatusStateMachine extends StateMachine
         ];
     }
 
-    public function defaultState(): ?string
+    public function defaultState(): string
     {
         return ClientsStatus::SANS_CONTRAT->value;
     }

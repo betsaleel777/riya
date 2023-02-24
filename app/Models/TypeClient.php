@@ -10,6 +10,7 @@ class TypeClient extends Model
     use SoftDeletes;
     protected $fillable = ['nom'];
 
+    protected $dates = ['created_at'];
     const RULES = [
         'nom' => 'required|unique:type_clients,nom|max:190',
     ];

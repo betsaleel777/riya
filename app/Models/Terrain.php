@@ -18,6 +18,7 @@ class Terrain extends Model
     ];
 
     protected $with = ['type', 'proprietaire'];
+    protected $dates = ['created_at'];
     /**
      * The attributes that should be cast.
      *

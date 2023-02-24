@@ -100,10 +100,10 @@
                                     <span class="fw-bold">{{ $contrat->reference }}</span>
                                 </td>
                                 <td>
-                                    {{ $contrat->debut }}
+                                    {{ $contrat->debut->format('d-m-Y') }}
                                 </td>
                                 <td>
-                                    {{ $contrat->fin }}
+                                    {{ $contrat->fin->format('d-m-Y') }}
                                 </td>
                                 <td>
                                     {{ $contrat->possedable->nom }}
@@ -121,7 +121,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {{ $contrat->created_at }}
+                                    {{ $contrat->created_at->format('d-m-Y') }}
                                 </td>
                                 <td>
                                     <div class="row d-flex align-items-center">

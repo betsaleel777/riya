@@ -7,6 +7,7 @@ use App\Http\Controllers\Categories\TypeClientController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ContratController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FactureController;
 use App\Http\Controllers\ProprietaireController;
 use App\Http\Controllers\TerrainController;
 use App\Http\Controllers\UserController;
@@ -50,6 +51,17 @@ Route::middleware('auth')->group(function () {
         Route::post('search-trashed', [ContratController::class, 'searchTrashed'])->name('searchTrashed');
         Route::post('store', [ContratController::class, 'store'])->name('store');
         Route::post('update', [ContratController::class, 'update'])->name('update');
+    });
+    Route::prefix('facture')->name('facture.')->group(function () {
+        Route::get('/', [FactureController::class, 'index'])->name('index');
+        Route::get('trashed', [FactureController::class, 'trashed'])->name('trashed');
+        Route::get('create', [FactureController::class, 'create'])->name('create');
+        Route::get('edit/{id}', [FactureController::class, 'edit'])->name('edit');
+        Route::get('export', [FactureController::class, 'export'])->name('export');
+        Route::post('search', [FactureController::class, 'search'])->name('search');
+        Route::post('search-trashed', [FactureController::class, 'searchTrashed'])->name('searchTrashed');
+        Route::post('store', [FactureController::class, 'store'])->name('store');
+        Route::post('update', [FactureController::class, 'update'])->name('update');
     });
     Route::prefix('terrains')->name('terrain.')->group(function () {
         Route::get('/', [TerrainController::class, 'index'])->name('index');

@@ -10,6 +10,7 @@ class TypeAppartement extends Model
     use SoftDeletes;
     protected $fillable = ['nom'];
 
+    protected $dates = ['created_at'];
     const RULES = [
         'nom' => 'required|unique:type_appartements,nom|max:190',
     ];

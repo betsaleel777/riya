@@ -16,7 +16,8 @@ class ProprietaireController extends Controller
     {
         $proprietaires = Proprietaire::paginate(DEFAULT_PAGINATION_NUMBER);
         $searching = false;
-        return view('proprietaire.index', compact('proprietaires', 'searching'));
+        $criteres = Proprietaire::CRITERES;
+        return view('proprietaire.index', compact('proprietaires', 'searching', 'criteres'));
     }
 
     public function create(): View
@@ -60,7 +61,8 @@ class ProprietaireController extends Controller
     {
         $proprietaires = Proprietaire::onlyTrashed()->orderBy('id', 'DESC')->paginate(DEFAULT_PAGINATION_NUMBER);
         $searching = false;
-        return view('proprietaire.archive', compact('proprietaires', 'searching'));
+        $criteres = Proprietaire::CRITERES;
+        return view('proprietaire.archive', compact('proprietaires', 'searching', 'criteres'));
     }
 
     public function restore(int $id): RedirectResponse
@@ -80,9 +82,11 @@ class ProprietaireController extends Controller
 
     public function searchTrashed(Request $request): View
     {
-        $searching = false;
+        $searching = true;
         if ($request->filled('search') and $request->has('archive')) {
-            $found = Proprietaire::where('nom_complet', 'LIKE', "%$request->search%")->onlyTrashed();
+            $keyword = $request->string('search')->trim();
+            $found = Proprietaire::onlyTrashed()->where($request->critere, 'LIKE', "%$keyword%")
+                ->orWhere($request->critere, $keyword);
             $proprietaires = $found->paginate(DEFAULT_PAGINATION_NUMBER);
             $searching = true;
             session()->flash('info', count($found->get()) . " Proprietaire(s) archivé(s) trouvé(s)");
@@ -94,11 +98,11 @@ class ProprietaireController extends Controller
 
     public function search(Request $request): View
     {
-        $searching = false;
+        $searching = true;
         if ($request->filled('search')) {
-            $found = Proprietaire::where('nom_complet', 'LIKE', "%$request->search%");
+            $keyword = $request->string('search')->trim();
+            $found = Proprietaire::where($request->critere, 'LIKE', "%$keyword%")->orWhere($request->critere, $keyword);
             $proprietaires = $found->paginate(DEFAULT_PAGINATION_NUMBER);
-            $searching = true;
             session()->flash('info', count($found->get()) . " Proprietaire(s) trouvé(s)");
         } else {
             $proprietaires = Proprietaire::paginate(DEFAULT_PAGINATION_NUMBER);

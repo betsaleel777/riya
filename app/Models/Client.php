@@ -14,6 +14,14 @@ class Client extends Model
     use SoftDeletes, HasStateMachines;
     protected $fillable = ['nom_complet', 'type_client_id', 'telephone', 'email', 'cni', 'etat'];
 
+    protected $dates = ['created_at'];
+    const CRITERES = [
+        'nom_complet' => 'Nom complet',
+        'email' => 'Email',
+        'telephone' => 'Téléphone',
+        'created_at' => 'Date de création'
+    ];
+
     const RULES = [
         'nom_complet' => 'required|max:200',
         'telephone' => 'required|unique:clients,telephone',

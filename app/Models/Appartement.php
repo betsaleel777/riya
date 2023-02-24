@@ -18,6 +18,7 @@ class Appartement extends Model
         'placard', 'etage', 'cuisine', 'garage', 'parking', 'toilette', 'observation', 'cloture', 'cie', 'sodeci',
     ];
 
+    protected $dates = ['created_at'];
     protected $with = ['type', 'proprietaire'];
     /**
      * The attributes that should be cast.

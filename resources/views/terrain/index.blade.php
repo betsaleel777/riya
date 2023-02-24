@@ -123,10 +123,10 @@
                                     {{ $terrain->proprietaire->nom_complet }}
                                 </td>
                                 <td>
-                                    {{ $terrain->montant_location }}
+                                    @money($terrain->montant_location, 'XOF')
                                 </td>
                                 <td>
-                                    {{ $terrain->created_at }}
+                                    {{ $terrain->created_at->format('d-m-Y') }}
                                 </td>
                                 <td>
                                     <div class="row d-flex align-items-center">

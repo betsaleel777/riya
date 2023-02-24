@@ -9,6 +9,15 @@ class Proprietaire extends Model
 {
     use SoftDeletes;
     protected $fillable = ['nom_complet', 'cni', 'telephone', 'email', 'commission_terrain', 'commission_appartement'];
+
+    protected $dates = ['created_at'];
+    const CRITERES = [
+        'nom_complet' => 'Nom complet',
+        'email' => 'Email',
+        'telephone' => 'Téléphone',
+        'cni' => 'Numéro de CNI',
+        'created_at' => 'Date de création'
+    ];
     /**
      * The attributes that should be cast.
      *

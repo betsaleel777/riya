@@ -254,6 +254,11 @@
                                     <span class="sidebar-text">Contrats</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('facture.index') }}">
+                                    <span class="sidebar-text">Factures</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -273,7 +278,7 @@
                                 class="badge badge-sm bg-secondary ms-1 text-gray-800">v1.4</span></span>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="../../pages/upgrade-to-pro.html"
                         class="btn btn-secondary d-flex align-items-center justify-content-center btn-upgrade-pro">
                         <span class="sidebar-icon d-inline-flex align-items-center justify-content-center">
@@ -286,7 +291,7 @@
                         </span>
                         <span>Upgrade to Pro</span>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </nav>

@@ -39,22 +39,36 @@
     </div>
     <div class="card border-0 shadow mb-4">
         <div class="card-body">
-            <div class="mb-3 w-25">
-                <form action="{{ route('client.searchTrashed') }}" method="POST">
-                    @csrf
-                    <input type="text" hidden name="archive" value="1">
-                    <div class="input-group">
-                        <button type="submit" class="input-group-text" id="basic-addon1">
-                            <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                        <input type="text" class="form-control" placeholder="Search" name="search" aria-label="Search">
-                    </div>
-                </form>
+            <div class="mb-3 w-50">
+                @if (!$searching)
+                    <form class="row g-2" action="{{ route('client.searchTrashed') }}" method="POST">
+                        @csrf
+                        <input type="text" hidden name="archive" value="1">
+                        <div class="col">
+                            <div class="input-group">
+                                <button type="submit" class="input-group-text" id="basic-addon1">
+                                    <svg class="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                </button>
+                                <input type="text" class="form-control" placeholder="Search" name="search"
+                                    aria-label="Search">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" name="critere" aria-label="critère">
+                                @foreach ($criteres as $key => $critere)
+                                    <option @if ($key === 'nom_complet') selected @endif value="{{ $key }}">
+                                        {{ $critere }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </form>
+                @endif
             </div>
             <div class="table-responsive">
                 <table class="table table-centered table-nowrap mb-0 rounded">

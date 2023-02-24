@@ -118,7 +118,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {{ $user->created_at }}
+                                    {{ $user->created_at->format('d-m-Y') }}
                                 </td>
                                 <td>
                                     <div class="row d-flex align-items-center">

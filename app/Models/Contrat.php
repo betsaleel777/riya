@@ -19,6 +19,12 @@ class Contrat extends Model
     protected $fillable = ['reference', 'debut', 'fin', 'client_id', 'status'];
 
     protected $dates = ['debut', 'fin', 'created_at'];
+    const CRITERES = [
+        'status' => 'Statut',
+        'debut' => 'Date de début',
+        'fin' => 'Date de fin',
+        'created_at' => 'Date de création'
+    ];
     const RULES = [
         'debut' => 'required',
         'fin' => 'required',

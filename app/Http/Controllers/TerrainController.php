@@ -20,7 +20,8 @@ class TerrainController extends Controller
     {
         $terrains = Terrain::paginate(DEFAULT_PAGINATION_NUMBER);
         $searching = false;
-        return view(self::INDEX, compact('terrains', 'searching'));
+        $criteres = Terrain::CRITERES;
+        return view(self::INDEX, compact('terrains', 'searching', 'criteres'));
     }
 
     public function create(): View
@@ -87,7 +88,8 @@ class TerrainController extends Controller
     {
         $terrains = Terrain::onlyTrashed()->orderBy('id', 'DESC')->paginate(DEFAULT_PAGINATION_NUMBER);
         $searching = false;
-        return view('terrain.archive', compact('terrains', 'searching'));
+        $criteres = Terrain::CRITERES;
+        return view('terrain.archive', compact('terrains', 'searching', 'criteres'));
     }
 
     public function restore(int $id): RedirectResponse
@@ -107,11 +109,12 @@ class TerrainController extends Controller
 
     public function searchTrashed(Request $request): View
     {
-        $searching = false;
+        $searching = true;
         if ($request->filled('search') and $request->has('archive')) {
-            $found = Terrain::where('nom', 'LIKE', "%$request->search%")->onlyTrashed();
+            $keyword = $request->string('search')->trim();
+            $found = Terrain::onlyTrashed()->where($request->critere, 'LIKE', "%$keyword%")
+                ->orWhere($request->critere, $keyword);
             $terrains = $found->paginate(DEFAULT_PAGINATION_NUMBER);
-            $searching = true;
             session()->flash('info', count($found->get()) . " terrain(s) archivé(s) trouvé(s)");
         } else {
             $terrains = Terrain::onlyTrashed()->paginate(DEFAULT_PAGINATION_NUMBER);
@@ -121,11 +124,11 @@ class TerrainController extends Controller
 
     public function search(Request $request): View
     {
-        $searching = false;
+        $searching = true;
         if ($request->filled('search')) {
-            $found = Terrain::where('nom', 'LIKE', "%$request->search%");
+            $keyword = $request->string('search')->trim();
+            $found = Terrain::where($request->critere, 'LIKE', "%$keyword%")->orWhere($request->critere, $keyword);
             $terrains = $found->paginate(DEFAULT_PAGINATION_NUMBER);
-            $searching = true;
             session()->flash('info', count($found->get()) . " terrain(s) trouvé(s)");
         } else {
             $terrains = Terrain::paginate(DEFAULT_PAGINATION_NUMBER);

@@ -39,7 +39,8 @@ class AppartementController extends Controller
     {
         $appartements = Appartement::paginate(DEFAULT_PAGINATION_NUMBER);
         $searching = false;
-        return view(self::INDEX, compact('appartements', 'searching'));
+        $criteres = Appartement::CRITERES;
+        return view(self::INDEX, compact('appartements', 'searching', 'criteres'));
     }
 
     public function create(): View
@@ -101,7 +102,8 @@ class AppartementController extends Controller
     {
         $appartements = Appartement::onlyTrashed()->orderBy('id', 'DESC')->paginate(DEFAULT_PAGINATION_NUMBER);
         $searching = false;
-        return view('appartement.archive', compact('appartements', 'searching'));
+        $criteres = Appartement::CRITERES;
+        return view('appartement.archive', compact('appartements', 'searching', 'criteres'));
     }
 
     public function restore(int $id): RedirectResponse
@@ -121,28 +123,29 @@ class AppartementController extends Controller
 
     public function searchTrashed(Request $request): View
     {
-        $searching = false;
+        $searching = true;
         if ($request->filled('search') and $request->has('archive')) {
-            $found = Appartement::where('nom', 'LIKE', "%$request->search%")->onlyTrashed();
-            $appartement = $found->paginate(DEFAULT_PAGINATION_NUMBER);
-            $searching = true;
+            $keyword = $request->string('search')->trim();
+            $found = Appartement::onlyTrashed()->where($request->critere, 'LIKE', "%$keyword%")
+                ->orWhere($request->critere, $keyword);
+            $appartements = $found->paginate(DEFAULT_PAGINATION_NUMBER);
             session()->flash('info', count($found->get()) . " appartement(s) archivé(s) trouvé(s)");
         } else {
-            $appartement = Appartement::onlyTrashed()->paginate(DEFAULT_PAGINATION_NUMBER);
+            $appartements = Appartement::onlyTrashed()->paginate(DEFAULT_PAGINATION_NUMBER);
         }
         return view('appartement.archive', compact('appartements', 'searching'));
     }
 
     public function search(Request $request): View
     {
-        $searching = false;
+        $searching = true;
         if ($request->filled('search')) {
-            $found = Appartement::where('nom', 'LIKE', "%$request->search%");
-            $appartement = $found->paginate(DEFAULT_PAGINATION_NUMBER);
-            $searching = true;
+            $keyword = $request->string('search')->trim();
+            $found = Appartement::where($request->critere, 'LIKE', "%$keyword%")->orWhere($request->critere, $keyword);
+            $appartements = $found->paginate(DEFAULT_PAGINATION_NUMBER);
             session()->flash('info', count($found->get()) . " appartement(s) trouvé(s)");
         } else {
-            $appartement = Appartement::paginate(DEFAULT_PAGINATION_NUMBER);
+            $appartements = Appartement::paginate(DEFAULT_PAGINATION_NUMBER);
         }
         return view(self::INDEX, compact('appartements', 'searching'));
     }

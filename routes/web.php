@@ -48,7 +48,6 @@ Route::middleware('auth')->group(function () {
         Route::get('edit/{id}', [ContratController::class, 'edit'])->name('edit');
         Route::get('export', [ContratController::class, 'export'])->name('export');
         Route::post('search', [ContratController::class, 'search'])->name('search');
-        Route::post('search-trashed', [ContratController::class, 'searchTrashed'])->name('searchTrashed');
         Route::post('store', [ContratController::class, 'store'])->name('store');
         Route::post('update', [ContratController::class, 'update'])->name('update');
     });

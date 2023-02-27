@@ -19,7 +19,8 @@ class ContratController extends Controller
     {
         $contrats = Contrat::paginate(DEFAULT_PAGINATION_NUMBER);
         $searching = false;
-        return view('contrat.index', compact('contrats', 'searching'));
+        $criteres = Contrat::CRITERES;
+        return view('contrat.index', compact('contrats', 'searching', 'criteres'));
     }
 
     public function create(): View
@@ -73,27 +74,13 @@ class ContratController extends Controller
         return redirect()->route('contrat.index');
     }
 
-    public function searchTrashed(Request $request): View
-    {
-        $searching = false;
-        if ($request->filled('search') and $request->has('archive')) {
-            $found = Contrat::where('nom_complet', 'LIKE', "%$request->search%")->onlyTrashed();
-            $contrats = $found->paginate(DEFAULT_PAGINATION_NUMBER);
-            $searching = true;
-            session()->flash('info', count($found->get()) . " contrat(s) archivé(s) trouvé(s)");
-        } else {
-            $contrats = Contrat::onlyTrashed()->paginate(DEFAULT_PAGINATION_NUMBER);
-        }
-        return view('contrat.archive', compact('contrats', 'searching'));
-    }
-
     public function search(Request $request): View
     {
-        $searching = false;
+        $searching = true;
         if ($request->filled('search')) {
-            $found = Contrat::where('nom_complet', 'LIKE', "%$request->search%");
+            $keyword = $request->string('search')->trim();
+            $found = Contrat::where($request->critere, 'LIKE', "%$keyword%")->orWhere($request->critere, $keyword);
             $contrats = $found->paginate(DEFAULT_PAGINATION_NUMBER);
-            $searching = true;
             session()->flash('info', count($found->get()) . " contrat(s) trouvé(s)");
         } else {
             $contrats = Contrat::paginate(DEFAULT_PAGINATION_NUMBER);

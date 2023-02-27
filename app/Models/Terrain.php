@@ -19,6 +19,11 @@ class Terrain extends Model
 
     protected $with = ['type', 'proprietaire'];
     protected $dates = ['created_at'];
+    const CRITERES = [
+        'nom' => 'Nom',
+        'quartier' => 'Quartier',
+        'created_at' => 'Date de création'
+    ];
     /**
      * The attributes that should be cast.
      *

@@ -20,6 +20,11 @@ class Appartement extends Model
 
     protected $dates = ['created_at'];
     protected $with = ['type', 'proprietaire'];
+    const CRITERES = [
+        'nom' => 'Nom',
+        'quartier' => 'Quartier',
+        'created_at' => 'Date de création'
+    ];
     /**
      * The attributes that should be cast.
      *
